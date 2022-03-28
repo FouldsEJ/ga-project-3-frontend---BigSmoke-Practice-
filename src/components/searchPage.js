@@ -69,7 +69,7 @@ const SearchPage = () => {
           <div className='columns'>
             {place.map((place) => (
               <div key={place._id} className='column card m-6'>
-                <Link to={`/places/${place._id}`}>
+                <Link to={`/explore/${place._id}`}>
                   <h2 className='title'>{place.name}</h2>
                   <figure className='image'>
                     <img src={place.image} alt={place.name} />
