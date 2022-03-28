@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import SearchPage from './searchPage.js';
 
 import '../styles/style.scss';
 import Home from './Home';
@@ -8,9 +9,9 @@ import Footer from './Footer';
 
 const App = () => (
   <BrowserRouter>
-    <Navbar />
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/search" element={<SearchPage />} />
     </Routes>
     <Footer />
   </BrowserRouter>
