@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 const SearchPage = () => {
   const [place, setPlace] = React.useState(null);
+  console.log('Place is:', place);
 
   React.useEffect(() => {
     const getData = async () => {
