@@ -33,7 +33,7 @@ export const getPlaceById = async (id) => {
 export const createPlace = async (place) => {
   const options = {
     method: 'POST',
-    url: `/api/places`,
+    url: '/api/places',
     data: place,
     headers: {
       authorization: `Bearer ${window.sessionStorage.getItem('token')}`
