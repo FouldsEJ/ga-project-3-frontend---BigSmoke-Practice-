@@ -1,93 +1,90 @@
 import React from 'react';
 import { getAllPlaces } from '../api/places.js';
 import { getPlaceByCategory } from '../api/places.js';
-import { Link } from 'react-router-dom';
+import PlaceCard from './placeCard.js';
 
 const SearchPage = () => {
-  const [place, setPlace] = React.useState(null);
-  console.log('Place is:', place);
+  const [allPlaces, setAllPlaces] = React.useState(null);
+  const [filteredPlace, setFilteredPlace] = React.useState(null);
+  const [categories, setCategories] = React.useState(null);
 
   React.useEffect(() => {
     const getData = async () => {
-      const placeData = await getAllPlaces();
-      setPlace(placeData);
+      try {
+        const placeData = await getAllPlaces();
+        setAllPlaces(placeData);
+        setFilteredPlace(placeData);
+      } catch (err) {
+        console.log('get all places error: ', err);
+      }
     };
     getData();
   }, []);
 
   function getCategories(event) {
-    console.log(event.target.value);
-    const getData = async () => {
-      const placeData = await getPlaceByCategory(event.target.value);
-      setPlace(placeData);
-    };
-    getData();
+    if (event.target.value === 'all') {
+      setCategories(allPlaces);
+      setFilteredPlace(allPlaces);
+    } else {
+      const getData = async () => {
+        try {
+          const placeData = await getPlaceByCategory(event.target.value);
+          setCategories(placeData);
+          setFilteredPlace(placeData);
+        } catch (err) {
+          console.log('get categories error: ', err);
+        }
+      };
+      getData();
+    }
   }
 
   function nameSearch(event) {
     let newData = [];
-    if (place) {
-      newData = place.filter((data) => {
+    if (filteredPlace) {
+      newData = categories.filter((data) => {
         return (
           data.name.toLowerCase().search(event.target.value.toLowerCase()) !==
           -1
         );
       });
+      setFilteredPlace(newData);
+      console.log(filteredPlace);
     }
-    if (event.target.value === '') {
-      const getData = async () => {
-        const placeData = await getAllPlaces();
-        setPlace(placeData);
-      };
-      getData();
-    }
-    console.log(event.target.value);
-    setPlace(newData);
   }
 
-  if (place) {
-    return (
-      <>
-        <h1 className='title'>What are we calling this?</h1>
-        <select name='categories' onChange={getCategories}>
-          <option value='arts/culture'>Arts/Culture</option>
-          <option value='shopping'>Shopping</option>
-          <option value='outdoors'>Outdoors</option>
-          <option value='entertainment'>Entertainment</option>
-          <option value='food/drink'>Food/Drink</option>
-        </select>
-        <div className='field'>
-          <label className='label'>Search by name</label>
-          <input
-            type='text'
-            onChange={nameSearch}
-            value={place.name}
-            placeholder=''
-          />
-        </div>
+  return (
+    <>
+      <h1 className='title'>What are we calling this?</h1>
+      <select name='categories' onChange={getCategories}>
+        <option value='all'>All</option>
+        <option value='arts/culture'>Arts/Culture</option>
+        <option value='shopping'>Shopping</option>
+        <option value='outdoors'>Outdoors</option>
+        <option value='entertainment'>Entertainment</option>
+        <option value='food/drink'>Food/Drink</option>
+      </select>
 
-        <div className='container'>
-          <div className='columns'>
-            {place.map((place) => (
-              <div key={place._id} className='column card m-6'>
-                <Link to={`/explore/${place._id}`}>
-                  <h2 className='title'>{place.name}</h2>
-                  <figure className='image'>
-                    <img src={place.image} alt={place.name} />
-                  </figure>
-                </Link>
-                <p>
-                  Nearest station: <strong>{place.stationName}</strong>
-                </p>
-              </div>
-            ))}
+      <div className='field'>
+        <label className='label'>Search by name</label>
+        <input type='text' onChange={nameSearch} placeholder='' />
+      </div>
+
+      <div>
+        {!filteredPlace ? (
+          <p>Loading ..</p>
+        ) : (
+          <div className='container'>
+            <div className='columns is-multiline'>
+              {filteredPlace.map((place) => (
+                <PlaceCard key={place._id} className='column' {...place} />
+              ))}
+            </div>
           </div>
-        </div>
-      </>
-    );
-  } else {
-    return <p className='loading'>Loading...</p>;
-  }
+        )}
+      </div>
+    </>
+  );
 };
 
 export default SearchPage;

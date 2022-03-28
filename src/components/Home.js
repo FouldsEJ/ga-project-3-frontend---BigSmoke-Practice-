@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { getPopular } from '../api/places';
-import { Link } from 'react-router-dom';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
+import PlaceCard from './placeCard';
 
 function Home() {
   const [popular, setPopular] = useState([]);
@@ -18,18 +18,18 @@ function Home() {
 
   return (
     <>
-      <section className="hero is-halfheight is-light">
-        <div className="hero-head ">
+      <section className='hero is-halfheight is-light'>
+        <div className='hero-head '>
           <a>
-            <img src="https://wallpaperaccess.com/full/204300.jpg" />
+            <img src='https://wallpaperaccess.com/full/204300.jpg' />
           </a>
         </div>
       </section>
 
-      <section className="hero is-halfheight is-light">
-        <div className="hero-body ">
-          <div className="container">
-            <p className="title">Most popular</p>
+      <section className='hero is-halfheight is-light'>
+        <div className='hero-body '>
+          <div className='container'>
+            <p className='title'>Most popular</p>
             <Splide
               options={{
                 perPage: 3,
@@ -37,22 +37,13 @@ function Home() {
                 arrows: false,
                 pagination: false,
                 drag: 'free',
-                gap: '5px',
+                gap: '5px'
               }}
             >
               {popular ? (
                 popular.map((place) => (
                   <SplideSlide key={place._id}>
-                    <div key={place._id} className="card">
-                      <Link to={`/places/${place._id}`}>
-                        <h2 className="card-header-title">{place.name}</h2>
-                        <div className="card-image">
-                          <figure className="image is-4by3">
-                            <img src={place.image} alt={place.name} />
-                          </figure>
-                        </div>
-                      </Link>
-                    </div>
+                    <PlaceCard key={place._id} {...place} />
                   </SplideSlide>
                 ))
               ) : (
