@@ -33,7 +33,7 @@ export const getPlaceById = async (id) => {
 export const createPlace = async (place) => {
   const options = {
     method: 'POST',
-    url: `/api/places`,
+    url: '/api/places',
     data: place,
     headers: {
       authorization: `Bearer ${window.sessionStorage.getItem('token')}`,
@@ -47,7 +47,7 @@ export const createPlace = async (place) => {
 export const getPlaceByCategory = async (category) => {
   const options = {
     method: 'GET',
-    url: `/places/categories?category=${category}`,
+    url: `/api/places/categories?category=${category}`,
   };
   const { data } = await axios.request(options);
 
