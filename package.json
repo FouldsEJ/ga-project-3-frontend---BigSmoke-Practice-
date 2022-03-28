@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.17.0",
+    "@splidejs/react-splide": "^0.6.20",
     "axios": "^0.26.1",
     "bulma": "^0.9.3",
     "mapbox-gl": "^2.7.1",
