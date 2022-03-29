@@ -46,13 +46,7 @@ function Home() {
             <Link to='/explore'>Click here for some ideas.</Link>
           </p>
         </Popup>
-        <section className='hero is-medium is-light'>
-          <div className='hero-head '>
-            <a>
-              <img src='https://wallpaperaccess.com/full/204300.jpg' />
-            </a>
-          </div>
-        </section>
+
         <section className='hero is-medium is-light' id='hero-text'>
           <div className='container is-max-widescreen'>
             <h3 className='title'>Visit London</h3>
@@ -82,7 +76,7 @@ function Home() {
                   arrows: true,
                   pagination: false,
                   drag: 'free',
-                  gap: '5px'
+                  gap: '5px',
                 }}
               >
                 {popular ? (
