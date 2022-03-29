@@ -88,3 +88,13 @@ export const removeLike = async (id) => {
   const { data } = await axios.request(options);
   return data;
 };
+
+export const getPlacesLiked = async (id) => {
+  const options = {
+    method: 'GET',
+    url: `/api/places/likes?likes=${id}`
+  };
+  const { data } = await axios.request(options);
+
+  return data;
+};

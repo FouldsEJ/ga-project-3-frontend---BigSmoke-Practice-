@@ -12,7 +12,10 @@ function AddPlace() {
     const getData = async () => {
       try {
         const Data = await getAllStations();
-        setStations(Data);
+        const names = Data.map((station) => {
+          return station.name;
+        });
+        setStations(names);
       } catch (err) {
         console.log(err);
       }
@@ -31,8 +34,6 @@ function AddPlace() {
     contact: '',
     stationName: ''
   });
-
-  const myStation = ['Station 1', 'Station 2', 'Station 3'];
 
   const categories = [
     { name: 'entertainment', index: 0 },
@@ -120,19 +121,22 @@ function AddPlace() {
         </div>
 
         <div name='categories field'>
-          {categories.map((category) => {
-            return (
-              <div key={category.name} className='category'>
-                <input
-                  type='checkbox'
-                  id={category.name}
-                  onChange={() => checkBox(category.name, category.index)}
-                  checked={isChecked[category.index]}
-                />
-                <label htmlFor={category.name}>{category.name}</label>
-              </div>
-            );
-          })}
+          <label className='label'>Categories</label>
+          <div className='is-flex category'>
+            {categories.map((category) => {
+              return (
+                <div key={category.name} className='categoryboxes'>
+                  <input
+                    type='checkbox'
+                    id={category.name}
+                    onChange={() => checkBox(category.name, category.index)}
+                    checked={isChecked[category.index]}
+                  />
+                  <label htmlFor={category.name}>{category.name}</label>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
         <div className='field image'>
@@ -207,7 +211,7 @@ function AddPlace() {
             <p>Boarding trains...</p>
           ) : (
             <Dropdown
-              options={myStation}
+              options={stations}
               onChange={onDropdown}
               value={''}
               placeholder='Select an option'
