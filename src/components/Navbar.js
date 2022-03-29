@@ -1,7 +1,21 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { isAdmin, getLoggedInUserId } from '../lib/auth.js';
 
 function Navbar() {
+  const [isAdminState, setIsAdminState] = useState(isAdmin());
+  let location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsAdminState(isAdmin());
+  }, [location]);
+
+  const logout = () => {
+    sessionStorage.removeItem('token');
+    setIsAdminState(false);
+    navigate('/');
+  };
   return (
     <header>
       <div className='navbar has-shadow is-white '>
@@ -22,17 +36,34 @@ function Navbar() {
           <Link to='/explore' className='navbar-item is-white'>
             Explore
           </Link>
-          <Link to='/add-place' className='navbar-item is-white'>
-            Add Place
-          </Link>
+
+          {isAdminState && (
+            <Link to='/add-place' className='navbar-item is-white'>
+              Add Place
+            </Link>
+          )}
+          {getLoggedInUserId() && (
+            <Link to='/profile ' className='navbar-item is-white'>
+              My Profile
+            </Link>
+          )}
         </div>
         <div className='navbar-end is-mobile '>
-          <Link to='/login' className='navbar-item is-white'>
-            Login
-          </Link>
-          <Link to='/register ' className='navbar-item is-white'>
-            Register
-          </Link>
+          {!getLoggedInUserId() && (
+            <Link to='/login' className='navbar-item is-white'>
+              Login
+            </Link>
+          )}
+          {!getLoggedInUserId() && (
+            <Link to='/register ' className='navbar-item is-white'>
+              Register
+            </Link>
+          )}
+          {getLoggedInUserId() && (
+            <div className='navbar-item' onClick={logout}>
+              Logout
+            </div>
+          )}
         </div>
       </div>
     </header>

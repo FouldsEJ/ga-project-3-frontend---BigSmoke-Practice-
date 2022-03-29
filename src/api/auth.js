@@ -4,7 +4,7 @@ export const registerUser = async (user) => {
   const options = {
     method: 'POST',
     url: '/api/register',
-    data: user,
+    data: user
   };
   const { data } = await axios.request(options);
 
@@ -15,7 +15,7 @@ export const loginUser = async (credentials) => {
   const options = {
     method: 'POST',
     url: '/api/login',
-    data: credentials,
+    data: credentials
   };
 
   const { data } = await axios.request(options);

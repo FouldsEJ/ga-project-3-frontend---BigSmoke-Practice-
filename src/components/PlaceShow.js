@@ -18,6 +18,11 @@ function PlaceShow() {
   const [singlePlace, setSinglePlace] = React.useState(null);
   const [tabIsActive, setTabIsActive] = React.useState(true);
   const [review, setReview] = React.useState(initialReview);
+  const [view, setViewport] = React.useState({
+    latitude: 51.507351,
+    longitude: -0.127758,
+    zoom: 12,
+  });
   const { id } = useParams();
   const MAPBOX_TOKEN = `${process.env.MAP_BOX_ACCESS_TOKEN}`;
 
@@ -27,6 +32,7 @@ function PlaceShow() {
       setSinglePlace(place);
       console.log('Lat: ', place.lat);
       console.log('Long: ', place.long);
+      setViewport({ ...view, latitude: place.lat, longitude: place.long });
     };
 
     getData();
@@ -55,20 +61,15 @@ function PlaceShow() {
   }
 
   async function handleAddOrRemoveLike() {
-    console.log(getLoggedInUserId());
-    console.log(singlePlace.likes);
-    const x = singlePlace.likes.includes((item) => {
-      return item === getLoggedInUserId();
-    });
-
-    console.log('X: ', x);
-
-    // const data = await addLike(id);
-    // setSinglePlace(data);
-
-    // const data = await removeLike(id);
-    // setSinglePlace(data);
+    if (singlePlace.likes.includes(getLoggedInUserId())) {
+      const data = await removeLike(id);
+      setSinglePlace(data);
+    } else {
+      const data = await addLike(id);
+      setSinglePlace(data);
+    }
   }
+  console.log('Create Review: ', review);
 
   if (!singlePlace) {
     return <p>Loading...</p>;
@@ -104,15 +105,11 @@ function PlaceShow() {
             </div>
             <div id='map-view' className={tabIsActive ? 'is-hidden' : ''}>
               <Map
-                initialViewState={{
-                  latitude: singlePlace.lat,
-                  longitude: singlePlace.long,
-                  zoom: 14,
-                  viewport: 'fit',
-                }}
-                style={{ width: 100, height: 100 }}
+                initialViewState={{ ...view }}
+                style={{ width: '100%', height: '100%' }}
                 mapStyle='mapbox://styles/mapbox/streets-v9'
                 mapboxAccessToken={MAPBOX_TOKEN}
+                onViewportChange={(viewport) => setViewport(viewport)}
               >
                 <Marker
                   longitude={singlePlace.long}
@@ -153,7 +150,7 @@ function PlaceShow() {
                 <label htmlFor='rating' className='label'>
                   Rating:
                 </label>
-                <input
+                {/* <input
                   type='number'
                   id='rating'
                   name='rating'
@@ -161,14 +158,14 @@ function PlaceShow() {
                   max='5'
                   value={review.rating}
                   onChange={handleReviewChange}
+                /> */}
+                <Rating
+                  name='simple-controlled'
+                  id='rating'
+                  name='rating'
+                  value={review.rating}
+                  onChange={handleReviewChange}
                 />
-                {/* <Rating
-                name='simple-controlled'
-                id='rating'
-                name='rating'
-                value={review.rating}
-                onChange={handleReviewChange}
-              /> */}
                 <label htmlFor='comment' className='label'>
                   Review:
                 </label>
