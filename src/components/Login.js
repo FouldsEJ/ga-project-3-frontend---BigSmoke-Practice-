@@ -1,9 +1,11 @@
 import React from 'react';
 import { loginUser } from '../api/auth';
 import { useNavigate } from 'react-router-dom';
+import Popup from './Popup';
 
 function Login() {
   const navigate = useNavigate();
+  const [popup, setPopup] = React.useState(false);
 
   const [user, setUser] = React.useState({
     email: '',
@@ -23,7 +25,7 @@ function Login() {
 
         navigate('/');
       } catch (error) {
-        console.log(error);
+        setPopup(true);
       }
     };
     getData();
@@ -32,6 +34,9 @@ function Login() {
   return (
     <section className="section">
       <div className="container">
+        <Popup trigger={popup} setTrigger={setPopup}>
+          <h2>Unauthorized! User not found</h2>
+        </Popup>
         <div className="columns">
           <form
             onSubmit={handleSubmit}
