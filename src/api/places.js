@@ -60,6 +60,31 @@ export const getAllStations = async () => {
     url: '/api/stations'
   };
   const { data } = await axios.request(options);
+  return data;
+};
 
+export const addLike = async (id) => {
+  const options = {
+    method: 'POST',
+    url: `/api/places/${id}/likes`,
+    headers: {
+      authorization: `Bearer ${window.sessionStorage.getItem('token')}`
+    }
+  };
+
+  const { data } = await axios.request(options);
+  return data;
+};
+
+export const removeLike = async (id) => {
+  const options = {
+    method: 'DELETE',
+    url: `/api/places/${id}/likes`,
+    headers: {
+      authorization: `Bearer ${window.sessionStorage.getItem('token')}`
+    }
+  };
+
+  const { data } = await axios.request(options);
   return data;
 };
