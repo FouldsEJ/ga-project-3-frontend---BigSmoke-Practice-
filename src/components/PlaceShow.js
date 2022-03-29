@@ -1,23 +1,26 @@
 import React from 'react';
 import Map, { Marker } from 'react-map-gl';
+import Heart from 'react-heart';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import Rating from '@mui/material/Rating';
 
 import { getPlaceById, addLike, removeLike } from '../api/places';
 import { createReview, deleteReview, editReview } from '../api/reviews';
-import { useParams } from 'react-router-dom';
+import { parsePath, useParams } from 'react-router-dom';
 import { getLoggedInUserId, isAdmin } from '../lib/auth';
 
 const initialReview = {
   comment: '',
-  rating: '',
+  rating: null,
 };
 
 function PlaceShow() {
   const [singlePlace, setSinglePlace] = React.useState(null);
   const [tabIsActive, setTabIsActive] = React.useState(true);
+  const [heartActive, setHeartActive] = React.useState(false);
   const [review, setReview] = React.useState(initialReview);
+
   const [view, setViewport] = React.useState({
     latitude: 51.507351,
     longitude: -0.127758,
@@ -33,6 +36,7 @@ function PlaceShow() {
       console.log('Lat: ', place.lat);
       console.log('Long: ', place.long);
       setViewport({ ...view, latitude: place.lat, longitude: place.long });
+      setHeartActive(place.likes.includes(getLoggedInUserId()));
     };
 
     getData();
@@ -44,8 +48,10 @@ function PlaceShow() {
 
   function handleReviewChange(e) {
     console.log(e.target.value);
-    console.log('ID: ', e.target.id);
-    setReview({ ...review, [e.target.id]: e.target.value });
+    console.log('ID: ', e.target.name);
+    const value = e.target.value;
+    const sanitisedVal = e.target.name === 'comment' ? value : parseInt(value);
+    setReview({ ...review, [e.target.name]: sanitisedVal });
   }
 
   async function handleReviewSubmit(e) {
@@ -61,12 +67,15 @@ function PlaceShow() {
   }
 
   async function handleAddOrRemoveLike() {
-    if (singlePlace.likes.includes(getLoggedInUserId())) {
-      const data = await removeLike(id);
-      setSinglePlace(data);
-    } else {
-      const data = await addLike(id);
-      setSinglePlace(data);
+    if (getLoggedInUserId()) {
+      setHeartActive(!heartActive);
+      if (singlePlace.likes.includes(getLoggedInUserId())) {
+        const data = await removeLike(id);
+        setSinglePlace(data);
+      } else {
+        const data = await addLike(id);
+        setSinglePlace(data);
+      }
     }
   }
   console.log('Create Review: ', review);
@@ -79,7 +88,7 @@ function PlaceShow() {
       <section className='m-6'>
         <h1 className='title has-text-centered'>{singlePlace.name}</h1>
         <div className='columns'>
-          <div className='column is-6'>
+          <div className='column is-6 is-centered'>
             <div className='tabs is-boxed'>
               <ul>
                 <li
@@ -118,15 +127,23 @@ function PlaceShow() {
                 />
               </Map>
             </div>
-            <div className='has-text-centered'>
-              <p>{singlePlace.likes.length}</p>
-              <button
-                type='button'
-                className='button is-warning'
-                onClick={handleAddOrRemoveLike}
-              >
-                {singlePlace.likes.length}
-              </button>
+            <div className='is-centered'>
+              <div className='heart is-centered' style={{ width: '3rem' }}>
+                <Heart
+                  isActive={heartActive}
+                  onClick={() => {
+                    handleAddOrRemoveLike();
+                  }}
+                />
+                <p
+                  id='like-count'
+                  onClick={() => {
+                    handleAddOrRemoveLike();
+                  }}
+                >
+                  {singlePlace.likes.length}
+                </p>
+              </div>
             </div>
           </div>
           <div className='column is-6'>
@@ -150,20 +167,11 @@ function PlaceShow() {
                 <label htmlFor='rating' className='label'>
                   Rating:
                 </label>
-                {/* <input
-                  type='number'
-                  id='rating'
-                  name='rating'
-                  min='1'
-                  max='5'
-                  value={review.rating}
-                  onChange={handleReviewChange}
-                /> */}
                 <Rating
                   name='simple-controlled'
                   id='rating'
                   name='rating'
-                  value={review.rating}
+                  value={review?.rating}
                   onChange={handleReviewChange}
                 />
                 <label htmlFor='comment' className='label'>
@@ -172,8 +180,9 @@ function PlaceShow() {
                 <textarea
                   type='text'
                   id='comment'
+                  name='comment'
                   className='input'
-                  value={review.comment}
+                  value={review?.comment}
                   onChange={handleReviewChange}
                 />
                 <button
