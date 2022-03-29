@@ -27,14 +27,6 @@ function Home() {
 
   return (
     <>
-      <section className='hero is-halfheight is-light'>
-        <div className='hero-head '>
-          <a>
-            <img src='https://wallpaperaccess.com/full/204300.jpg' />
-          </a>
-        </div>
-      </section>
-
       <main>
         <Popup trigger={timedPopup} setTrigger={setTimedPopup}>
           {' '}
@@ -43,38 +35,35 @@ function Home() {
           <hr />
           <p>
             {' '}
-            <Link to='/explore'>Click here for some ideas.</Link>
+            <Link to="/explore">Click here for some ideas.</Link>
           </p>
         </Popup>
-        <section className='hero is-medium is-light'>
-          <div className='hero-head '>
+        <section className="hero is-medium is-light">
+          <div className="hero-head ">
             <a>
-              <img src='https://wallpaperaccess.com/full/204300.jpg' />
+              <img src="https://wallpaperaccess.com/full/204300.jpg" />
             </a>
           </div>
         </section>
-        <section className='hero is-medium is-light' id='hero-text'>
-          <div className='container is-max-widescreen'>
-            <h3 className='title'>Visit London</h3>
-            <p className='subtitle'>
-              Let's Do London Welcome to London!
-              <p className='block'>
-                Discover the best of London with Visit London, the independent
-                guide to England’s exciting capital. Find things to do in
-                London, from iconic sightseeing spots and fun-filled days out to
-                top restaurants, theatre and unmissable London events. If you’re
-                not able to visit just yet, plan ahead to make the most of your
-                next visit.
-                <hr />
-              </p>
-            </p>
+        <section className="hero is-medium is-light" id="hero-text">
+          <div className="container is-max-widescreen">
+            <h3 className="title"> Welcome to London!</h3>
+
+            <h2 className="block">
+              Discover the best of London with Visit London, the independent
+              guide to England’s exciting capital. Find things to do in London,
+              from iconic sightseeing spots and fun-filled days out to top
+              restaurants, theatre and unmissable London events. If you’re not
+              able to visit just yet, plan ahead to make the most of your next
+              visit.
+            </h2>
           </div>
         </section>
 
-        <section className='hero is-halfheight is-light'>
-          <div className='hero-body '>
-            <div className='container'>
-              <p className='title'>Most popular</p>
+        <section className="hero is-halfheight is-light">
+          <div className="hero-body ">
+            <div className="container">
+              <p className="title">Most popular</p>
               <Splide
                 options={{
                   perPage: 3,
@@ -82,7 +71,7 @@ function Home() {
                   arrows: true,
                   pagination: false,
                   drag: 'free',
-                  gap: '5px'
+                  gap: '5px',
                 }}
               >
                 {popular ? (
