@@ -59,8 +59,8 @@ function Home() {
                 top restaurants, theatre and unmissable London events. If you’re
                 not able to visit just yet, plan ahead to make the most of your
                 next visit.
-                <hr />
               </p>
+              <hr />
             </p>
           </div>
         </section>
