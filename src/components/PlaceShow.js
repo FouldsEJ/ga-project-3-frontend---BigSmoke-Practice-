@@ -4,14 +4,20 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 import Rating from '@mui/material/Rating';
 
-import { getPlaceById } from '../api/places';
-import { createReview } from '../api/reviews';
+import { getPlaceById, addLike, removeLike } from '../api/places';
+import { createReview, deleteReview, editReview } from '../api/reviews';
 import { useParams } from 'react-router-dom';
+import { getLoggedInUserId, isAdmin } from '../lib/auth';
+
+const initialReview = {
+  comment: '',
+  rating: '',
+};
 
 function PlaceShow() {
   const [singlePlace, setSinglePlace] = React.useState(null);
   const [tabIsActive, setTabIsActive] = React.useState(true);
-  const [review, setReview] = React.useState('');
+  const [review, setReview] = React.useState(initialReview);
   const { id } = useParams();
   const MAPBOX_TOKEN = `${process.env.MAP_BOX_ACCESS_TOKEN}`;
 
@@ -19,6 +25,8 @@ function PlaceShow() {
     const getData = async () => {
       const place = await getPlaceById(id);
       setSinglePlace(place);
+      console.log('Lat: ', place.lat);
+      console.log('Long: ', place.long);
     };
 
     getData();
@@ -36,10 +44,31 @@ function PlaceShow() {
 
   async function handleReviewSubmit(e) {
     e.preventDefault();
-    await createReview(id, review);
+    const data = await createReview(id, review);
+    setReview(initialReview);
+    setSinglePlace(data);
   }
 
-  console.log('Reivew: ', review);
+  async function handleDeleteReview(reviewId) {
+    const data = await deleteReview(id, reviewId);
+    setSinglePlace(data);
+  }
+
+  async function handleAddOrRemoveLike() {
+    console.log(getLoggedInUserId());
+    console.log(singlePlace.likes);
+    const x = singlePlace.likes.includes((item) => {
+      return item === getLoggedInUserId();
+    });
+
+    console.log('X: ', x);
+
+    // const data = await addLike(id);
+    // setSinglePlace(data);
+
+    // const data = await removeLike(id);
+    // setSinglePlace(data);
+  }
 
   if (!singlePlace) {
     return <p>Loading...</p>;
@@ -79,20 +108,28 @@ function PlaceShow() {
                   latitude: singlePlace.lat,
                   longitude: singlePlace.long,
                   zoom: 14,
+                  viewport: 'fit',
                 }}
-                style={{ width: 800, height: 600 }}
+                style={{ width: 100, height: 100 }}
                 mapStyle='mapbox://styles/mapbox/streets-v9'
                 mapboxAccessToken={MAPBOX_TOKEN}
               >
                 <Marker
-                  longitude={singlePlace.lat}
-                  latitude={singlePlace.long}
+                  longitude={singlePlace.long}
+                  latitude={singlePlace.lat}
                   color='red'
                 />
               </Map>
             </div>
             <div className='has-text-centered'>
-              <p>{singlePlace.likes}</p>
+              <p>{singlePlace.likes.length}</p>
+              <button
+                type='button'
+                className='button is-warning'
+                onClick={handleAddOrRemoveLike}
+              >
+                {singlePlace.likes.length}
+              </button>
             </div>
           </div>
           <div className='column is-6'>
@@ -108,40 +145,67 @@ function PlaceShow() {
                 <p>{singlePlace.category}</p>
               </div>
             </div>
-
             <hr />
             <h2 className='title has-text-centered'>Reviews</h2>
-            <div className='form'>
-              <label htmlFor='rating' className='label'>
-                Rating:
-              </label>
-              <Rating
+            {console.log(getLoggedInUserId())}
+            {getLoggedInUserId() && (
+              <div className='form'>
+                <label htmlFor='rating' className='label'>
+                  Rating:
+                </label>
+                <input
+                  type='number'
+                  id='rating'
+                  name='rating'
+                  min='1'
+                  max='5'
+                  value={review.rating}
+                  onChange={handleReviewChange}
+                />
+                {/* <Rating
                 name='simple-controlled'
                 id='rating'
                 name='rating'
                 value={review.rating}
                 onChange={handleReviewChange}
-              />
-              <label htmlFor='comment' className='label'>
-                Review:
-              </label>
-              <textarea
-                type='text'
-                id='comment'
-                className='input'
-                value={review.comment}
-                onChange={handleReviewChange}
-              />
-              <button
-                className='button mt-3'
-                type='submit'
-                onClick={handleReviewSubmit}
-              >
-                Leave a Review
-              </button>
+              /> */}
+                <label htmlFor='comment' className='label'>
+                  Review:
+                </label>
+                <textarea
+                  type='text'
+                  id='comment'
+                  className='input'
+                  value={review.comment}
+                  onChange={handleReviewChange}
+                />
+                <button
+                  className='button mt-3'
+                  type='submit'
+                  onClick={handleReviewSubmit}
+                >
+                  Leave a Review
+                </button>
+              </div>
+            )}
+            <div className='container'>
+              {singlePlace.reviews.map((review) => (
+                <div className='box' key={review._id}>
+                  <Rating name='read-only' value={review.rating} readOnly />
+                  {(getLoggedInUserId() === review.createdBy || isAdmin()) && (
+                    <button
+                      type='button'
+                      className='button is-danger is-small is-outlined'
+                      onClick={() => handleDeleteReview(review._id)}
+                    >
+                      Delete Review
+                    </button>
+                  )}
+                  <p>{review.comment}</p>
+                  <p>Reviewed by: {review.createdBy}</p>
+                </div>
+              ))}
             </div>
-            <p>{singlePlace.reviews.rating}</p>
-            <p>{singlePlace.reviews.comment}</p>
           </div>
         </div>
       </section>

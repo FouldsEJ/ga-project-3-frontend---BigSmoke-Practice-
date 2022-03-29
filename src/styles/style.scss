@@ -1,5 +1,9 @@
 @import '~bulma/bulma.sass';
 
+body {
+  overflow: scroll; /* Show scrollbars */
+}
+
 img {
   border-radius: 5px;
 }
