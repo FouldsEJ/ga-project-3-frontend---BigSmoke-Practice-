@@ -34,7 +34,7 @@ function Home() {
               options={{
                 perPage: 3,
                 rewind: true,
-                arrows: false,
+                arrows: true,
                 pagination: false,
                 drag: 'free',
                 gap: '5px'

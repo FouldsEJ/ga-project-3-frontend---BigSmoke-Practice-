@@ -53,3 +53,13 @@ export const getPlaceByCategory = async (category) => {
 
   return data;
 };
+
+export const getAllStations = async () => {
+  const options = {
+    method: 'GET',
+    url: '/api/stations'
+  };
+  const { data } = await axios.request(options);
+
+  return data;
+};

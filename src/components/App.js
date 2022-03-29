@@ -10,16 +10,18 @@ import Footer from './Footer';
 import PlaceShow from './PlaceShow';
 import Login from './Login';
 import Register from './Register';
+import AddPlace from './AddPlace.js';
 
 const App = () => (
   <BrowserRouter>
     <Navbar />
     <Routes>
-      <Route path="/explore/:id" element={<PlaceShow />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/" element={<Home />} />
-      <Route path="/explore" element={<SearchPage />} />
+      <Route path='/explore/:id' element={<PlaceShow />} />
+      <Route path='/login' element={<Login />} />
+      <Route path='/register' element={<Register />} />
+      <Route path='/' element={<Home />} />
+      <Route path='/explore' element={<SearchPage />} />
+      <Route path='/add-place' element={<AddPlace />} />
     </Routes>
     <Footer />
   </BrowserRouter>

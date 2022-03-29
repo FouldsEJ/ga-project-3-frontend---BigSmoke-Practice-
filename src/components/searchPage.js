@@ -55,19 +55,21 @@ const SearchPage = () => {
 
   return (
     <>
-      <h1 className='title'>What are we calling this?</h1>
-      <select name='categories' onChange={getCategories}>
-        <option value='all'>All</option>
-        <option value='arts/culture'>Arts/Culture</option>
-        <option value='shopping'>Shopping</option>
-        <option value='outdoors'>Outdoors</option>
-        <option value='entertainment'>Entertainment</option>
-        <option value='food/drink'>Food/Drink</option>
-      </select>
+      <div className='container has-text-centered'>
+        <h1 className='title'>What are we calling this?</h1>
+        <select name='categories' onChange={getCategories}>
+          <option value='all'>All</option>
+          <option value='arts/culture'>Arts/Culture</option>
+          <option value='shopping'>Shopping</option>
+          <option value='outdoors'>Outdoors</option>
+          <option value='entertainment'>Entertainment</option>
+          <option value='food/drink'>Food/Drink</option>
+        </select>
 
-      <div className='field'>
-        <label className='label'>Search by name</label>
-        <input type='text' onChange={nameSearch} placeholder='' />
+        <div className='field'>
+          <label className='label'>Search by name</label>
+          <input type='text' onChange={nameSearch} placeholder='' />
+        </div>
       </div>
 
       <div>
@@ -77,7 +79,12 @@ const SearchPage = () => {
           <div className='container'>
             <div className='columns is-multiline'>
               {filteredPlace.map((place) => (
-                <PlaceCard key={place._id} className='column' {...place} />
+                <div
+                  className='column is-one-quarter-desktop is-half-tablet is-one-mobile'
+                  key={place._id}
+                >
+                  <PlaceCard {...place} />
+                </div>
               ))}
             </div>
           </div>

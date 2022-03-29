@@ -22,6 +22,9 @@ function Navbar() {
           <Link to='/explore' className='navbar-item is-white'>
             Explore
           </Link>
+          <Link to='/add-place' className='navbar-item is-white'>
+            Add Place
+          </Link>
         </div>
         <div className='navbar-end is-mobile '>
           <Link to='/login' className='navbar-item is-white'>
