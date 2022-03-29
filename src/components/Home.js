@@ -35,30 +35,6 @@ function Home() {
         </div>
       </section>
 
-      <section className='hero is-halfheight is-light'>
-        <div className='hero-body '>
-          <div className='container'>
-            <p className='title'>Most popular</p>
-            <Splide
-              options={{
-                perPage: 3,
-                rewind: true,
-                arrows: true,
-                pagination: false,
-                drag: 'free',
-                gap: '5px',
-              }}
-            >
-              {popular ? (
-                popular.map((place) => (
-                  <SplideSlide key={place._id}>
-                    <PlaceCard key={place._id} {...place} />
-                  </SplideSlide>
-                ))
-              ) : (
-                <p>Loading...</p>
-              )}
-            </Splide>
       <main>
         <Popup trigger={timedPopup} setTrigger={setTimedPopup}>
           {' '}
@@ -67,22 +43,22 @@ function Home() {
           <hr />
           <p>
             {' '}
-            <Link to="/explore">Click here for some ideas.</Link>
+            <Link to='/explore'>Click here for some ideas.</Link>
           </p>
         </Popup>
-        <section className="hero is-medium is-light">
-          <div className="hero-head ">
+        <section className='hero is-medium is-light'>
+          <div className='hero-head '>
             <a>
-              <img src="https://wallpaperaccess.com/full/204300.jpg" />
+              <img src='https://wallpaperaccess.com/full/204300.jpg' />
             </a>
           </div>
         </section>
-        <section className="hero is-medium is-light" id="hero-text">
-          <div className="container is-max-widescreen">
-            <h3 className="title">Visit London</h3>
-            <p className="subtitle">
+        <section className='hero is-medium is-light' id='hero-text'>
+          <div className='container is-max-widescreen'>
+            <h3 className='title'>Visit London</h3>
+            <p className='subtitle'>
               Let's Do London Welcome to London!
-              <p className="block">
+              <p className='block'>
                 Discover the best of London with Visit London, the independent
                 guide to England’s exciting capital. Find things to do in
                 London, from iconic sightseeing spots and fun-filled days out to
@@ -95,10 +71,10 @@ function Home() {
           </div>
         </section>
 
-        <section className="hero is-halfheight is-light">
-          <div className="hero-body ">
-            <div className="container">
-              <p className="title">Most popular</p>
+        <section className='hero is-halfheight is-light'>
+          <div className='hero-body '>
+            <div className='container'>
+              <p className='title'>Most popular</p>
               <Splide
                 options={{
                   perPage: 3,
