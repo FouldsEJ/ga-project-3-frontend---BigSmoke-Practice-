@@ -7,9 +7,17 @@ body {
 img {
   border-radius: 5px;
 }
-.coordinates-box {
+.coordinates-box,
+.category,
+.profile-text {
   justify-content: space-around;
 }
+.categoryboxes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .popup {
   position: fixed;
   top: 0;
@@ -45,4 +53,14 @@ img {
   height: 100%;
   border: 4px red solid;
   position: relative;
+}
+.profile-background {
+  background-image: url('https://media.istockphoto.com/photos/london-tower-bridge-river-thames-city-skyscrapers-illuminated-sunset-picture-id860119662?k=20&m=860119662&s=170667a&w=0&h=ItV1oh0qQypQ4QBIC1c2Dth3SjyS0DR3rdRoCo8NJFY=');
+  height: 400px;
+  background-position: center;
+  background-size: cover;
+  flex-direction: column;
+}
+.profile-text {
+  font-size: 50px;
 }
