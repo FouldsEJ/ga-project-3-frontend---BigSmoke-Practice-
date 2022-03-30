@@ -35,7 +35,8 @@ function Login() {
     <section className="section">
       <div className="container">
         <Popup trigger={popup} setTrigger={setPopup}>
-          <h2>Unauthorized! User not found</h2>
+          <h2>The email and password you entered did not match our records.</h2>
+          <h2> Please double-check and try again or Register.</h2>
         </Popup>
         <div className="columns">
           <form
@@ -46,7 +47,7 @@ function Login() {
               <label htmlFor="email" className="label">
                 Email
               </label>
-              <div className="control">
+              <div className="control has-icons-left">
                 <input
                   placeholder="Email"
                   name="email"
@@ -65,7 +66,7 @@ function Login() {
               <label htmlFor="password" className="label">
                 Password
               </label>
-              <div className="control">
+              <div className="control has-icons-left">
                 <input
                   placeholder="Password"
                   name="password"
@@ -75,6 +76,9 @@ function Login() {
                   value={user.password}
                   onChange={handleChange}
                 ></input>
+                <span className="icon is-small is-left">
+                  <i className="fas fa-lock"></i>
+                </span>
               </div>
             </div>
             <button type="submit" className="button is-fullwidth is-info">

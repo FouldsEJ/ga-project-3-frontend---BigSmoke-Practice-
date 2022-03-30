@@ -72,7 +72,7 @@ function Register() {
             </div>
             <div className="field">
               <label className="label">Email</label>
-              <div className="control">
+              <div className="control has-icons-left">
                 <input
                   className="input"
                   placeholder="Email"
@@ -80,11 +80,14 @@ function Register() {
                   onChange={handleChange}
                   value={user.email}
                 />
+                <span className="icon is-small is-left">
+                  <i className="fas fa-envelope"></i>
+                </span>
               </div>
             </div>
             <div className="field">
               <label className="label">Password</label>
-              <div className="control">
+              <div className="control has-icons-left">
                 <input
                   type="password"
                   className="input"
@@ -93,11 +96,14 @@ function Register() {
                   onChange={handleChange}
                   value={user.password}
                 />
+                <span className="icon is-small is-left">
+                  <i className="fas fa-lock"></i>
+                </span>
               </div>
             </div>
             <div className="field">
               <label className="label">Password Confirmation</label>
-              <div className="control">
+              <div className="control has-icons-left">
                 <input
                   type="password"
                   className="input"
@@ -106,6 +112,9 @@ function Register() {
                   onChange={handleChange}
                   value={user.passwordConfirmation}
                 />
+                <span className="icon is-small is-left">
+                  <i className="fas fa-lock"></i>
+                </span>
               </div>
             </div>
             <div className="field">

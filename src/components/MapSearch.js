@@ -13,6 +13,24 @@ function MapSearch(props) {
     navigate(`/explore/${placeId}`);
   }
 
+  // function setColour(category) {
+  //   console.log(category);
+  //   switch (category) {
+  //     case 'arts/culture':
+  //       return 'red';
+  //     case 'entertainment':
+  //       return 'yellow';
+  //     case 'food/drink':
+  //       return 'green';
+  //     case 'outdoors':
+  //       return 'orange';
+  //     case 'shopping':
+  //       return 'pink';
+  //     default:
+  //       return 'black';
+  //   }
+  // }
+
   if (!props.filteredPlace) {
     return <p>Loading...</p>;
   }
@@ -36,7 +54,7 @@ function MapSearch(props) {
             <Marker
               longitude={place.long}
               latitude={place.lat}
-              color='red'
+              color='blue'
               onClick={() => setShowPopup(place._id)}
             />
 

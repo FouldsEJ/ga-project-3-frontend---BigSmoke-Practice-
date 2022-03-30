@@ -57,20 +57,47 @@ const SearchPage = () => {
 
   return (
     <>
-      <div className='container has-text-centered'>
-        <h1 className='title'>What are we calling this?</h1>
-        <select name='categories' onChange={getCategories}>
-          <option value='all'>All</option>
-          <option value='arts/culture'>Arts/Culture</option>
-          <option value='shopping'>Shopping</option>
-          <option value='outdoors'>Outdoors</option>
-          <option value='entertainment'>Entertainment</option>
-          <option value='food/drink'>Food/Drink</option>
-        </select>
+      <div className='section has-text-centered p-0 filter-search'>
+        <h1 className='title'>Explore London</h1>
+        <div className='container'>
+          <div className='columns mb-3 is-centered'>
+            <div className='column is-2'>
+              <div class='field'>
+                <label class='label'>Search Keyword</label>
+                <p className='control has-icons-left'>
+                  <input
+                    type='text'
+                    onChange={nameSearch}
+                    placeholder='Search'
+                    className='input is-info is-rounded'
+                  />
+                  <span className='icon is-left'>
+                    <i className='fas fa-search'></i>
+                  </span>
+                </p>
+              </div>
+            </div>
 
-        <div className='field'>
-          <label className='label'>Search by name</label>
-          <input type='text' onChange={nameSearch} placeholder='' />
+            <div className='column is-2'>
+              <div class='field'>
+                <label class='label'>Category</label>
+                <span className='select'>
+                  <select
+                    name='categories'
+                    onChange={getCategories}
+                    className='input is-info is-rounded'
+                  >
+                    <option value='all'>All</option>
+                    <option value='arts/culture'>Arts/Culture</option>
+                    <option value='shopping'>Shopping</option>
+                    <option value='outdoors'>Outdoors</option>
+                    <option value='entertainment'>Entertainment</option>
+                    <option value='food/drink'>Food/Drink</option>
+                  </select>
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -86,7 +113,7 @@ const SearchPage = () => {
                 <div className='columns is-multiline'>
                   {filteredPlace.map((place) => (
                     <div
-                      className='column is-one-quarter-desktop is-half-tablet is-one-mobile'
+                      className='column is-one-quarter-desktop is-half-tablet is-one-mobile mt-6'
                       key={place._id}
                     >
                       <PlaceCard {...place} />
@@ -94,7 +121,7 @@ const SearchPage = () => {
                   ))}
                 </div>
               </div>
-              <div className='column is-4'>
+              <div className='column is-6'>
                 <div className='map-search'>
                   <MapSearch filteredPlace={filteredPlace} />
                 </div>

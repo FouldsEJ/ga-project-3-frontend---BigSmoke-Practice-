@@ -2,31 +2,40 @@ import React from 'react';
 import Map, { Marker } from 'react-map-gl';
 import Heart from 'react-heart';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 
 import Rating from '@mui/material/Rating';
 
-import { getPlaceById, addLike, removeLike } from '../api/places';
-import { createReview, deleteReview, editReview } from '../api/reviews';
-import { parsePath, useParams } from 'react-router-dom';
+import {
+  getPlaceById,
+  getPlaceByCategory,
+  addLike,
+  removeLike,
+} from '../api/places';
+import PlaceCard from './placeCard';
+import { createReview, deleteReview } from '../api/reviews';
+import { useParams } from 'react-router-dom';
 import { getLoggedInUserId, isAdmin } from '../lib/auth';
 import { getAllUsers } from '../api/auth';
 
 const initialReview = {
   comment: '',
-  rating: null
+  rating: null,
 };
 
 function PlaceShow() {
   const [singlePlace, setSinglePlace] = React.useState(null);
   const [tabIsActive, setTabIsActive] = React.useState(true);
   const [heartActive, setHeartActive] = React.useState(false);
+  const [category, setCategory] = React.useState(null);
   const [review, setReview] = React.useState(initialReview);
   const [images, setImages] = React.useState(null);
 
   const [view, setViewport] = React.useState({
     latitude: 51.507351,
     longitude: -0.127758,
-    zoom: 12
+    zoom: 12,
   });
   const { id } = useParams();
   const MAPBOX_TOKEN = `${process.env.MAP_BOX_ACCESS_TOKEN}`;
@@ -35,8 +44,9 @@ function PlaceShow() {
     const getData = async () => {
       const place = await getPlaceById(id);
       setSinglePlace(place);
-      console.log('Lat: ', place.lat);
-      console.log('Long: ', place.long);
+
+      const categoryData = await getPlaceByCategory(place.category);
+      setCategory(categoryData);
       setViewport({ ...view, latitude: place.lat, longitude: place.long });
       setHeartActive(place.likes.includes(getLoggedInUserId()));
       const allUsers = await getAllUsers();
@@ -49,6 +59,7 @@ function PlaceShow() {
   function handleTabClick(e) {
     setTabIsActive(!tabIsActive);
   }
+
   function getImage(user) {
     if (images) {
       const imageUrl = images.find((data) => {
@@ -102,7 +113,7 @@ function PlaceShow() {
       <section className='m-6'>
         <h1 className='title has-text-centered'>{singlePlace.name}</h1>
         <div className='columns'>
-          <div className='column is-6 is-centered'>
+          <div className='column is-6 is-centered image-and-map-column'>
             <div className='tabs is-boxed'>
               <ul>
                 <li
@@ -126,21 +137,23 @@ function PlaceShow() {
                 <img src={singlePlace.image} alt={singlePlace.name} />
               </figure>
             </div>
-            <div id='map-view' className={tabIsActive ? 'is-hidden' : ''}>
-              <Map
-                initialViewState={{ ...view }}
-                style={{ width: '100%', height: '100%' }}
-                mapStyle='mapbox://styles/mapbox/streets-v9'
-                mapboxAccessToken={MAPBOX_TOKEN}
-                onViewportChange={(viewport) => setViewport(viewport)}
-              >
-                <Marker
-                  longitude={singlePlace.long}
-                  latitude={singlePlace.lat}
-                  color='red'
-                />
-              </Map>
-            </div>
+            {!tabIsActive && (
+              <div id='map-view'>
+                <Map
+                  initialViewState={{ ...view }}
+                  style={{ width: '100%', height: '100%' }}
+                  mapStyle='mapbox://styles/mapbox/streets-v9'
+                  mapboxAccessToken={MAPBOX_TOKEN}
+                  onViewportChange={(viewport) => setViewport(viewport)}
+                >
+                  <Marker
+                    longitude={singlePlace.long}
+                    latitude={singlePlace.lat}
+                    color='red'
+                  />
+                </Map>
+              </div>
+            )}
             <div className='is-centered'>
               <div className='heart is-centered' style={{ width: '3rem' }}>
                 <Heart
@@ -232,6 +245,34 @@ function PlaceShow() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className='hero is-halfheight is-light'>
+        <div className='hero-body '>
+          <div className='container'>
+            <p className='title'>Most popular</p>
+            <Splide
+              options={{
+                perPage: 3,
+                rewind: true,
+                arrows: true,
+                pagination: false,
+                drag: 'free',
+                gap: '5px',
+              }}
+            >
+              {category ? (
+                category.map((place) => (
+                  <SplideSlide key={place._id}>
+                    <PlaceCard key={place._id} {...place} />
+                  </SplideSlide>
+                ))
+              ) : (
+                <p>Loading...</p>
+              )}
+            </Splide>
           </div>
         </div>
       </section>
