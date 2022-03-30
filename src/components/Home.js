@@ -35,27 +35,27 @@ function Home() {
           <hr />
           <p>
             {' '}
-            <Link to="/explore">Click here for some ideas.</Link>
+            <Link to='/explore'>Click here for some ideas.</Link>
           </p>
         </Popup>
 
-        <section className="hero is-medium is-light" id="hero-image">
-          <div className="hero-body is-flex ">
-            <div className="container  has-text-centered">
-              <h1 className="title dispaly has-text-grey is-size-2">
+        <section className='hero is-medium is-light' id='hero-image'>
+          <div className='hero-body is-flex '>
+            <div className='container  has-text-centered'>
+              <h1 className='title dispaly has-text-grey is-size-2'>
                 <FontAwesomeIcon icon={faCity} />
                 <span> The Big Smoke</span>
               </h1>
-              <h2 className="block">Discover London from real people </h2>
+              <h2 className='block'>Discover London from real people </h2>
             </div>
           </div>
         </section>
 
-        <section className="hero is-medium is-light" id="hero-text">
-          <div className="container is-max-widescreen">
-            <h3 className="title"> Welcome to London!</h3>
+        <section className='hero is-medium is-light' id='hero-text'>
+          <div className='container is-max-widescreen'>
+            <h3 className='title'> Welcome to London!</h3>
 
-            <h2 className="block">
+            <h2 className='block'>
               Discover the best of London with Visit London, the independent
               guide to England’s exciting capital. Find things to do in London,
               from iconic sightseeing spots and fun-filled days out to top
@@ -66,10 +66,10 @@ function Home() {
           </div>
         </section>
 
-        <section className="hero is-halfheight is-light">
-          <div className="hero-body ">
-            <div className="container">
-              <p className="title">Most popular</p>
+        <section className='hero is-halfheight is-light'>
+          <div className='hero-body '>
+            <div className='container'>
+              <p className='title'>Most popular</p>
               <Splide
                 options={{
                   perPage: 3,
