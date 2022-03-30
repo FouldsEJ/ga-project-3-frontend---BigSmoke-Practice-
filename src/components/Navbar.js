@@ -2,6 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { isAdmin, getLoggedInUserId } from '../lib/auth.js';
 
+import ReactTooltip from 'react-tooltip';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faHome,
+  faMagnifyingGlassLocation,
+  faRightFromBracket,
+  faRightToBracket,
+  faUser,
+  faUserPlus,
+  faPlusCircle,
+} from '@fortawesome/free-solid-svg-icons';
+
 function Navbar() {
   const [isAdminState, setIsAdminState] = useState(isAdmin());
   let location = useLocation();
@@ -18,51 +30,111 @@ function Navbar() {
   };
   return (
     <header>
-      <div className='navbar has-shadow is-white '>
-        <div className='navbar-brand'>
-          <a className='navbar-item'>
+      <div className="navbar has-shadow is-white ">
+        <div className="navbar-brand">
+          <a className="navbar-item">
             <img
-              src='https://www.johnsonbanks.co.uk/content/thoughts/488_london_logo_tl.jpg'
-              alt='navbar-logo'
-              width='70px'
-              height='70px'
+              src="https://www.johnsonbanks.co.uk/content/thoughts/488_london_logo_tl.jpg"
+              alt="navbar-logo"
+              width="70px"
+              height="70px"
             />
           </a>
         </div>
-        <div className='navbar-start is-mobile '>
-          <Link to='/' className='navbar-item is-white'>
-            Home
-          </Link>
-          <Link to='/explore' className='navbar-item is-white'>
-            Explore
+        <div className="navbar-start is-mobile ">
+          <Link to="/" className="navbar-item is-white">
+            <FontAwesomeIcon
+              icon={faHome}
+              size="2x"
+              data-tip
+              data-for="homeTip"
+            />
+            <ReactTooltip id="homeTip" place="top" effect="solid">
+              Home
+            </ReactTooltip>
           </Link>
 
+          <Link to="/explore" className="navbar-item is-white">
+            <FontAwesomeIcon
+              icon={faMagnifyingGlassLocation}
+              size="2x"
+              data-tip
+              data-for="exploreTip"
+            />
+          </Link>
+          <ReactTooltip id="exploreTip" place="top" effect="solid">
+            Explore
+          </ReactTooltip>
+
           {isAdminState && (
-            <Link to='/add-place' className='navbar-item is-white'>
-              Add Place
+            <Link to="/add-place" className="navbar-item is-white">
+              <FontAwesomeIcon
+                icon={faPlusCircle}
+                size="2x"
+                data-tip
+                data-for="addlocationTip"
+              />
+              <ReactTooltip id="addlocationTip" place="top" effect="solid">
+                Add a place
+              </ReactTooltip>
             </Link>
           )}
+
           {getLoggedInUserId() && (
-            <Link to='/profile ' className='navbar-item is-white'>
-              My Profile
+            <Link to="/profile " className="navbar-item is-white">
+              <FontAwesomeIcon
+                icon={faUser}
+                size="2x"
+                data-tip
+                data-for="profileTip"
+              />
+              <ReactTooltip id="profileTip" place="top" effect="solid">
+                My profile
+              </ReactTooltip>
             </Link>
           )}
         </div>
-        <div className='navbar-end is-mobile '>
+        <div className="navbar-end is-mobile ">
           {!getLoggedInUserId() && (
-            <Link to='/login' className='navbar-item is-white'>
-              Login
+            <Link to="/login" className="navbar-item is-white">
+              <FontAwesomeIcon
+                icon={faRightToBracket}
+                size="2x"
+                data-tip
+                data-for="loginTip"
+              />
+              <ReactTooltip id="loginTip" place="top" effect="solid">
+                Login
+              </ReactTooltip>
             </Link>
           )}
+
           {!getLoggedInUserId() && (
-            <Link to='/register ' className='navbar-item is-white'>
-              Register
+            <Link to="/register " className="navbar-item is-white">
+              <FontAwesomeIcon
+                icon={faUserPlus}
+                size="2x"
+                data-tip
+                data-for="registerTip"
+              />
+              <ReactTooltip id="registerTip" place="top" effect="solid">
+                Register
+              </ReactTooltip>
             </Link>
           )}
+
           {getLoggedInUserId() && (
-            <div className='navbar-item' onClick={logout}>
-              Logout
-            </div>
+            <Link to="/" className="navbar-item is-white" onClick={logout}>
+              <FontAwesomeIcon
+                icon={faRightFromBracket}
+                size="2x"
+                data-tip
+                data-for="logoutTip"
+              />
+              <ReactTooltip id="logoutTip" place="top" effect="solid">
+                Logout
+              </ReactTooltip>
+            </Link>
           )}
         </div>
       </div>
