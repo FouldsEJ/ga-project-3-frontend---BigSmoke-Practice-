@@ -1,7 +1,7 @@
 import React from 'react';
 import { getAllPlaces } from '../api/places.js';
 import { getPlaceByCategory } from '../api/places.js';
-import PlaceCard from './placeCard.js';
+import PlaceCard from './PlaceCard.js';
 import MapSearch from './MapSearch.js';
 
 const SearchPage = () => {

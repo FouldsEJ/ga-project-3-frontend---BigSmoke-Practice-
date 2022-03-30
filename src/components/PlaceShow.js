@@ -9,10 +9,11 @@ import { getPlaceById, addLike, removeLike } from '../api/places';
 import { createReview, deleteReview, editReview } from '../api/reviews';
 import { parsePath, useParams } from 'react-router-dom';
 import { getLoggedInUserId, isAdmin } from '../lib/auth';
+import { getAllImages } from '../api/auth';
 
 const initialReview = {
   comment: '',
-  rating: null,
+  rating: null
 };
 
 function PlaceShow() {
@@ -20,11 +21,12 @@ function PlaceShow() {
   const [tabIsActive, setTabIsActive] = React.useState(true);
   const [heartActive, setHeartActive] = React.useState(false);
   const [review, setReview] = React.useState(initialReview);
+  const [images, setImages] = React.useState(null);
 
   const [view, setViewport] = React.useState({
     latitude: 51.507351,
     longitude: -0.127758,
-    zoom: 12,
+    zoom: 12
   });
   const { id } = useParams();
   const MAPBOX_TOKEN = `${process.env.MAP_BOX_ACCESS_TOKEN}`;
@@ -37,6 +39,8 @@ function PlaceShow() {
       console.log('Long: ', place.long);
       setViewport({ ...view, latitude: place.lat, longitude: place.long });
       setHeartActive(place.likes.includes(getLoggedInUserId()));
+      const allImages = await getAllImages();
+      setImages(allImages);
     };
 
     getData();
@@ -44,6 +48,16 @@ function PlaceShow() {
 
   function handleTabClick(e) {
     setTabIsActive(!tabIsActive);
+  }
+  function getImage(user) {
+    if (images) {
+      const imageUrl = images.find((data) => {
+        return data.user === user;
+      });
+      return imageUrl.url;
+    } else {
+      console.log('no images');
+    }
   }
 
   function handleReviewChange(e) {
@@ -209,6 +223,12 @@ function PlaceShow() {
                   )}
                   <p>{review.comment}</p>
                   <p>Reviewed by: {review.createdBy}</p>
+                  <div>
+                    <img
+                      className='reviewPicture'
+                      src={getImage(review.createdBy)}
+                    />
+                  </div>
                 </div>
               ))}
             </div>

@@ -27,3 +27,21 @@ export const loginUser = async (credentials) => {
   console.log('login data', data);
   return data;
 };
+
+export const getImage = async (userId) => {
+  const options = {
+    method: 'GET',
+    url: `/api/user?user=${userId}`
+  };
+  const { data } = await axios.request(options);
+  return data;
+};
+
+export const getAllImages = async () => {
+  const options = {
+    method: 'GET',
+    url: `/api/images`
+  };
+  const { data } = await axios.request(options);
+  return data;
+};
