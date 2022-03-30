@@ -11,9 +11,9 @@ import {
   getPlaceById,
   getPlaceByCategory,
   addLike,
-  removeLike,
+  removeLike
 } from '../api/places';
-import PlaceCard from './placeCard';
+import PlaceCard from './PlaceCard';
 import { createReview, deleteReview } from '../api/reviews';
 import { useParams } from 'react-router-dom';
 import { getLoggedInUserId, isAdmin } from '../lib/auth';
@@ -21,7 +21,7 @@ import { getAllUsers } from '../api/auth';
 
 const initialReview = {
   comment: '',
-  rating: null,
+  rating: null
 };
 
 function PlaceShow() {
@@ -35,7 +35,7 @@ function PlaceShow() {
   const [view, setViewport] = React.useState({
     latitude: 51.507351,
     longitude: -0.127758,
-    zoom: 12,
+    zoom: 12
   });
   const { id } = useParams();
   const MAPBOX_TOKEN = `${process.env.MAP_BOX_ACCESS_TOKEN}`;
@@ -260,7 +260,7 @@ function PlaceShow() {
                 arrows: true,
                 pagination: false,
                 drag: 'free',
-                gap: '5px',
+                gap: '5px'
               }}
             >
               {category ? (
