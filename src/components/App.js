@@ -1,18 +1,18 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import SearchPage from './searchPage.js';
+import SearchPage from './SearchPage.js';
 
 import '../styles/style.scss';
 import Home from './Home';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
-import PlaceShow from './PlaceShow';
-import Login from './Login';
-import Register from './Register';
+import PlaceShow from './PlaceShow.js';
+import Login from './Login.js';
+import Register from './Register.js';
 import AddPlace from './AddPlace.js';
 import MapSearch from './MapSearch.js';
-import ProfilePage from './profilePage.js';
+import ProfilePage from './ProfilePage.js';
 
 const App = () => (
   <BrowserRouter>

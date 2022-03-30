@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getPopular } from '../api/places';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
-import PlaceCard from './placeCard';
+import PlaceCard from './PlaceCard.js';
 import Popup from './Popup';
 import { Link } from 'react-router-dom';
 
@@ -35,21 +35,21 @@ function Home() {
           <hr />
           <p>
             {' '}
-            <Link to="/explore">Click here for some ideas.</Link>
+            <Link to='/explore'>Click here for some ideas.</Link>
           </p>
         </Popup>
-        <section className="hero is-medium is-light">
-          <div className="hero-head ">
+        <section className='hero is-medium is-light'>
+          <div className='hero-head '>
             <a>
-              <img src="https://wallpaperaccess.com/full/204300.jpg" />
+              <img src='https://wallpaperaccess.com/full/204300.jpg' />
             </a>
           </div>
         </section>
-        <section className="hero is-medium is-light" id="hero-text">
-          <div className="container is-max-widescreen">
-            <h3 className="title"> Welcome to London!</h3>
+        <section className='hero is-medium is-light' id='hero-text'>
+          <div className='container is-max-widescreen'>
+            <h3 className='title'> Welcome to London!</h3>
 
-            <h2 className="block">
+            <h2 className='block'>
               Discover the best of London with Visit London, the independent
               guide to England’s exciting capital. Find things to do in London,
               from iconic sightseeing spots and fun-filled days out to top
@@ -60,10 +60,10 @@ function Home() {
           </div>
         </section>
 
-        <section className="hero is-halfheight is-light">
-          <div className="hero-body ">
-            <div className="container">
-              <p className="title">Most popular</p>
+        <section className='hero is-halfheight is-light'>
+          <div className='hero-body '>
+            <div className='container'>
+              <p className='title'>Most popular</p>
               <Splide
                 options={{
                   perPage: 3,
@@ -71,7 +71,7 @@ function Home() {
                   arrows: true,
                   pagination: false,
                   drag: 'free',
-                  gap: '5px',
+                  gap: '5px'
                 }}
               >
                 {popular ? (
