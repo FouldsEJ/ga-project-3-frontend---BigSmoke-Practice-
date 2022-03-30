@@ -13,7 +13,7 @@ import { getAllImages } from '../api/auth';
 
 const initialReview = {
   comment: '',
-  rating: null
+  rating: null,
 };
 
 function PlaceShow() {
@@ -26,7 +26,7 @@ function PlaceShow() {
   const [view, setViewport] = React.useState({
     latitude: 51.507351,
     longitude: -0.127758,
-    zoom: 12
+    zoom: 12,
   });
   const { id } = useParams();
   const MAPBOX_TOKEN = `${process.env.MAP_BOX_ACCESS_TOKEN}`;
@@ -102,7 +102,7 @@ function PlaceShow() {
       <section className='m-6'>
         <h1 className='title has-text-centered'>{singlePlace.name}</h1>
         <div className='columns'>
-          <div className='column is-6 is-centered'>
+          <div className='column is-6 is-centered image-and-map-column'>
             <div className='tabs is-boxed'>
               <ul>
                 <li
