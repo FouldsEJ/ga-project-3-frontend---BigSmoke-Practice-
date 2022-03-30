@@ -12,6 +12,7 @@ import {
   faUser,
   faUserPlus,
   faPlusCircle,
+  faCity,
 } from '@fortawesome/free-solid-svg-icons';
 
 function Navbar() {
@@ -31,25 +32,19 @@ function Navbar() {
   return (
     <header>
       <div className="navbar has-shadow is-white ">
-        <div className="navbar-brand">
-          <a className="navbar-item">
-            <img
-              src="https://www.johnsonbanks.co.uk/content/thoughts/488_london_logo_tl.jpg"
-              alt="navbar-logo"
-              width="70px"
-              height="70px"
-            />
-          </a>
-        </div>
+        <div className="navbar-brand"></div>
         <div className="navbar-start is-mobile ">
           <Link to="/" className="navbar-item is-white">
-            <FontAwesomeIcon
-              icon={faHome}
-              size="2x"
-              data-tip
-              data-for="homeTip"
-            />
-            <ReactTooltip id="homeTip" place="top" effect="solid">
+            <h1>
+              <FontAwesomeIcon
+                icon={faCity}
+                size="2x"
+                data-tip
+                data-for="homeTip"
+              />
+              <strong> The Big Smoke</strong>
+            </h1>
+            <ReactTooltip id="homeTip" place="right" effect="solid">
               Home
             </ReactTooltip>
           </Link>
