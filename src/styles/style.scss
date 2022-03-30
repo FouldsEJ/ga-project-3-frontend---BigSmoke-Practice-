@@ -14,6 +14,17 @@ img {
   align-items: center;
 }
 
+#hero-image {
+  background-image: url('https://wallpaperaccess.com/full/204300.jpg');
+
+  height: 60vh;
+}
+
+.block {
+  font-size: 25px;
+}
+
+//Popup Window
 .popup {
   position: fixed;
   top: 0;
