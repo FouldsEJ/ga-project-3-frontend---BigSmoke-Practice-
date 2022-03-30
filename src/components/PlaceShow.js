@@ -9,7 +9,7 @@ import { getPlaceById, addLike, removeLike } from '../api/places';
 import { createReview, deleteReview, editReview } from '../api/reviews';
 import { parsePath, useParams } from 'react-router-dom';
 import { getLoggedInUserId, isAdmin } from '../lib/auth';
-import { getAllImages } from '../api/auth';
+import { getAllUsers } from '../api/auth';
 
 const initialReview = {
   comment: '',
@@ -39,8 +39,8 @@ function PlaceShow() {
       console.log('Long: ', place.long);
       setViewport({ ...view, latitude: place.lat, longitude: place.long });
       setHeartActive(place.likes.includes(getLoggedInUserId()));
-      const allImages = await getAllImages();
-      setImages(allImages);
+      const allUsers = await getAllUsers();
+      setImages(allUsers);
     };
 
     getData();
@@ -52,9 +52,9 @@ function PlaceShow() {
   function getImage(user) {
     if (images) {
       const imageUrl = images.find((data) => {
-        return data.user === user;
+        return data._id === user;
       });
-      return imageUrl.url;
+      return imageUrl.image;
     } else {
       console.log('no images');
     }

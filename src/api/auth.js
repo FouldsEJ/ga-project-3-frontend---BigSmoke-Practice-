@@ -28,20 +28,38 @@ export const loginUser = async (credentials) => {
   return data;
 };
 
-export const getImage = async (userId) => {
+//export const getImage = async (userId) => {
+//  const options = {
+//    method: 'GET',
+//    url: `/api/user?user=${userId}`
+//  };
+//  const { data } = await axios.request(options);
+//  return data;
+//};
+
+export const getAllUsers = async () => {
   const options = {
     method: 'GET',
-    url: `/api/user?user=${userId}`
+    url: `/api/users`
   };
   const { data } = await axios.request(options);
   return data;
 };
 
-export const getAllImages = async () => {
-  const options = {
-    method: 'GET',
-    url: `/api/images`
-  };
-  const { data } = await axios.request(options);
-  return data;
+export const getUser = async (id) => {
+  try {
+    const { data } = await axios.get(`/api/user/${id}`);
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
 };
+
+//export const postImage = async (image) => {
+//  try {
+//    const { data } = await axios.post('/api/images', image);
+//    console.log(data);
+//  } catch (err) {
+//    console.log(err);
+//  }
+//};
