@@ -2,6 +2,7 @@ import React from 'react';
 import { getAllPlaces } from '../api/places.js';
 import { getPlaceByCategory } from '../api/places.js';
 import PlaceCard from './placeCard.js';
+import MapSearch from './MapSearch.js';
 
 const SearchPage = () => {
   const [allPlaces, setAllPlaces] = React.useState(null);
@@ -73,22 +74,33 @@ const SearchPage = () => {
         </div>
       </div>
 
-      <div>
+      <hr id='search-page-line' />
+
+      <div className='section search-display-wrapper'>
         {!filteredPlace ? (
           <p>Loading ..</p>
         ) : (
-          <div className='container'>
-            <div className='columns is-multiline'>
-              {filteredPlace.map((place) => (
-                <div
-                  className='column is-one-quarter-desktop is-half-tablet is-one-mobile'
-                  key={place._id}
-                >
-                  <PlaceCard {...place} />
+          <>
+            <div className='columns'>
+              <div className='column'>
+                <div className='columns is-multiline'>
+                  {filteredPlace.map((place) => (
+                    <div
+                      className='column is-one-quarter-desktop is-half-tablet is-one-mobile'
+                      key={place._id}
+                    >
+                      <PlaceCard {...place} />
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+              <div className='column is-4'>
+                <div className='map-search'>
+                  <MapSearch filteredPlace={filteredPlace} />
+                </div>
+              </div>
             </div>
-          </div>
+          </>
         )}
       </div>
     </>
