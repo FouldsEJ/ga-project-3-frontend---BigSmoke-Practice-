@@ -23,7 +23,7 @@ function Login() {
       try {
         await loginUser(user);
 
-        navigate('/');
+        navigate('/profile');
       } catch (error) {
         setPopup(true);
       }

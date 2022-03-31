@@ -18,6 +18,7 @@ const SearchPage = () => {
     };
     getData();
   }, []);
+
   function getCategories(event) {
     if (event.target.value === 'all') {
       setCategories(allPlaces);
@@ -35,6 +36,7 @@ const SearchPage = () => {
       getData();
     }
   }
+
   function nameSearch(event) {
     let newData = [];
     if (filteredPlace) {

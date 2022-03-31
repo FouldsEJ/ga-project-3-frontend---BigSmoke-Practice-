@@ -20,6 +20,9 @@ img {
   background-image: url('https://wallpaperaccess.com/full/204300.jpg');
   height: 60vh;
 }
+.navbar {
+  background-color: #9fd3c7;
+}
 
 .block {
   font-size: 25px;
@@ -229,8 +232,7 @@ hr {
   align-items: center;
   display: flex;
   text-align: center;
-  background-color: #6795c1;
-  color: #fff;
+  background-color: #9fd3c7;
   font-family: 'Quicksand', sans-serif;
   font-size: 20px;
   opacity: 0;
