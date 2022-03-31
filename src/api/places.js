@@ -3,7 +3,7 @@ import axios from 'axios';
 export const getPopular = async () => {
   const options = {
     method: 'GET',
-    url: '/api/places/popular',
+    url: '/api/places/popular'
   };
   const { data } = await axios.request(options);
   return data;
@@ -12,7 +12,7 @@ export const getPopular = async () => {
 export const getAllPlaces = async () => {
   const options = {
     method: 'GET',
-    url: '/api/places',
+    url: '/api/places'
   };
   const { data } = await axios.request(options);
 
@@ -22,7 +22,7 @@ export const getAllPlaces = async () => {
 export const getPlaceById = async (id) => {
   const options = {
     method: 'GET',
-    url: `/api/places/${id}`,
+    url: `/api/places/${id}`
   };
 
   const { data } = await axios.request(options);
@@ -36,8 +36,8 @@ export const createPlace = async (place) => {
     url: '/api/places',
     data: place,
     headers: {
-      authorization: `Bearer ${window.sessionStorage.getItem('token')}`,
-    },
+      authorization: `Bearer ${window.sessionStorage.getItem('token')}`
+    }
   };
   const { data } = await axios.request(options);
 
@@ -47,7 +47,17 @@ export const createPlace = async (place) => {
 export const getPlaceByCategory = async (category) => {
   const options = {
     method: 'GET',
-    url: `/api/places/categories?category=${category}`,
+    url: `/api/places/categories?category=${category}`
+  };
+  const { data } = await axios.request(options);
+
+  return data;
+};
+
+export const getPlaceBySearch = async (text, category, station) => {
+  const options = {
+    method: 'GET',
+    url: `/places/search?text=${text}&category=${category}&station=${station}`,
   };
   const { data } = await axios.request(options);
 
@@ -57,7 +67,7 @@ export const getPlaceByCategory = async (category) => {
 export const getAllStations = async () => {
   const options = {
     method: 'GET',
-    url: '/api/stations',
+    url: '/api/stations'
   };
   const { data } = await axios.request(options);
   return data;
@@ -68,8 +78,8 @@ export const addLike = async (id) => {
     method: 'POST',
     url: `/api/places/${id}/likes`,
     headers: {
-      authorization: `Bearer ${window.sessionStorage.getItem('token')}`,
-    },
+      authorization: `Bearer ${window.sessionStorage.getItem('token')}`
+    }
   };
 
   const { data } = await axios.request(options);
@@ -81,8 +91,8 @@ export const removeLike = async (id) => {
     method: 'DELETE',
     url: `/api/places/${id}/likes`,
     headers: {
-      authorization: `Bearer ${window.sessionStorage.getItem('token')}`,
-    },
+      authorization: `Bearer ${window.sessionStorage.getItem('token')}`
+    }
   };
 
   const { data } = await axios.request(options);
@@ -94,8 +104,8 @@ export const addToItenerary = async (id) => {
     method: 'POST',
     url: `/api/places/${id}/itenerary`,
     headers: {
-      authorization: `Bearer ${window.sessionStorage.getItem('token')}`,
-    },
+      authorization: `Bearer ${window.sessionStorage.getItem('token')}`
+    }
   };
   const { data } = await axios.request(options);
   return data;
@@ -106,8 +116,8 @@ export const removeFromItenerary = async (id) => {
     method: 'DELETE',
     url: `/api/places/${id}/itenerary`,
     headers: {
-      authorization: `Bearer ${window.sessionStorage.getItem('token')}`,
-    },
+      authorization: `Bearer ${window.sessionStorage.getItem('token')}`
+    }
   };
 
   const { data } = await axios.request(options);
@@ -117,7 +127,17 @@ export const removeFromItenerary = async (id) => {
 export const getPlacesLiked = async (id) => {
   const options = {
     method: 'GET',
-    url: `/api/places/likes?likes=${id}`,
+    url: `/api/places/likes?likes=${id}`
+  };
+  const { data } = await axios.request(options);
+
+  return data;
+};
+
+export const getItinerary = async (id) => {
+  const options = {
+    method: 'GET',
+    url: `/api/places/itenerary?itenerary=${id}`
   };
   const { data } = await axios.request(options);
 

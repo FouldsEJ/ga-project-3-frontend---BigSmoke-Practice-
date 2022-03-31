@@ -1,6 +1,6 @@
 @import '~bulma/bulma.sass';
 body {
-  font-family: 'Kalam', cursive;
+  font-family: 'Comfortaa', cursive;
 }
 img {
   border-radius: 10px;
@@ -126,6 +126,7 @@ color: #9fd3c7;
   box-sizing: border-box;
 
   #image-view {
+    position: relative;
     object-fit: cover;
     overflow: hidden;
     width: 100%;
@@ -153,8 +154,15 @@ hr {
 }
 
 .heart {
-  position: relative;
+  position: absolute;
   cursor: pointer;
+  top: 10px;
+  right: 10px;
+
+  .sc-bczRLJ {
+    fill: white;
+    transition: 0.2s;
+  }
 
   #like-count {
     background: rgba(255, 255, 255, 0);
@@ -251,4 +259,21 @@ min-height: calc(100vh - 196px);
 
 .footer {
   height: 100px
+}
+//Map Search
+.mapboxgl-popup-content {
+  text-align: center;
+  background-color: #6795c1;
+  max-width: 150px;
+  max-height: 200px;
+  border-radius: 10px;
+
+  h2 {
+    font-weight: bold;
+    color: white;
+  }
+
+  img {
+    min-width: 100%;
+  }
 }

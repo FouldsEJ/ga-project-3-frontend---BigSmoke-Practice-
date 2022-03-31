@@ -1,5 +1,5 @@
 import React from 'react';
-import { getPlacesLiked } from '../api/places.js';
+import { getItinerary, removeFromItenerary } from '../api/places.js';
 import PlaceCard from './PlaceCard.js';
 import { getLoggedInUserId, getLoggedInUserName } from '../lib/auth.js';
 //import { getImage, postImage } from '../api/auth.js';
@@ -9,13 +9,13 @@ import { removeLike } from '../api/places.js';
 function ProfilePage() {
   const userName = getLoggedInUserName();
   const userId = getLoggedInUserId();
-  const [likedPlace, setlikedPlace] = React.useState(null);
+  const [myPlace, setMyPlace] = React.useState(null);
   const [profilePicture, setProfilePicture] = React.useState(null);
 
   React.useEffect(() => {
     const getData = async () => {
-      const likedPlaces = await getPlacesLiked(userId);
-      setlikedPlace(likedPlaces);
+      const likedPlaces = await getItinerary(userId);
+      setMyPlace(likedPlaces);
       const user = await getUser(userId);
       setProfilePicture(user.image);
     };
@@ -25,8 +25,8 @@ function ProfilePage() {
   function deletePlace(place) {
     const getData = async () => {
       await removeLike(place);
-      const likedPlaces = await getPlacesLiked(userId);
-      setlikedPlace(likedPlaces);
+      const likedPlaces = await getItinerary(userId);
+      setMyPlace(likedPlaces);
     };
     getData();
   }

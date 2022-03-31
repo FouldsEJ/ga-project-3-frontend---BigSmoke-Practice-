@@ -6,6 +6,7 @@ import Popup from './Popup';
 function Register() {
   const navigate = useNavigate();
   const [popup, setPopup] = React.useState({});
+  const [imageUploaded, setImageUploaded] = React.useState('Upload an image');
 
   const [user, setUser] = React.useState({
     name: '',
@@ -34,6 +35,7 @@ function Register() {
             return;
           }
           setUser({ ...user, image: result.info.secure_url });
+          setImageUploaded('Successfully Uploaded!');
         }
       )
       .open();
@@ -107,8 +109,8 @@ function Register() {
             </div>
             <div className="field">
               <label className="label">Profile Picture</label>
-              <button className="button is-info" onClick={handleUpload}>
-                Upload an image
+              <button className="button" onClick={handleUpload}>
+                {imageUploaded}
               </button>
             </div>
             <div className="field">

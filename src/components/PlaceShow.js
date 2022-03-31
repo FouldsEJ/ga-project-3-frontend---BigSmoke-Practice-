@@ -1,6 +1,7 @@
 import React from 'react';
 import Map, { Marker } from 'react-map-gl';
 import Heart from 'react-heart';
+import { v4 as uuidv4 } from 'uuid';
 import PlaceCard from './PlaceCard';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
@@ -13,11 +14,13 @@ import {
   getPlaceByCategory,
   addLike,
   removeLike,
+  addToItenerary,
+  removeFromItenerary,
 } from '../api/places';
 import { createReview, deleteReview } from '../api/reviews';
 import { useParams } from 'react-router-dom';
 import { getLoggedInUserId, isAdmin } from '../lib/auth';
-import { getAllUsers, getUser } from '../api/auth';
+import { getAllUsers } from '../api/auth';
 
 const initialReview = {
   comment: '',
@@ -37,6 +40,7 @@ function PlaceShow() {
 
   React.useEffect(() => {
     const getData = async () => {
+      window.scrollTo(0, 0);
       const place = await getPlaceById(id);
       setSinglePlace(place);
 
@@ -69,8 +73,6 @@ function PlaceShow() {
   }
 
   function handleReviewChange(e) {
-    console.log(e.target.value);
-    console.log('ID: ', e.target.name);
     const value = e.target.value;
     const sanitisedVal = e.target.name === 'comment' ? value : parseInt(value);
     setReview({ ...review, [e.target.name]: sanitisedVal });
@@ -102,7 +104,15 @@ function PlaceShow() {
   }
 
   async function handleAddOrRemoveItinerary() {
-    console.log('Clicked thanks');
+    if (getLoggedInUserId()) {
+      if (singlePlace.itenerary.includes(getLoggedInUserId())) {
+        const data = await removeFromItenerary(id);
+        setSinglePlace(data);
+      } else {
+        const data = await addToItenerary(id);
+        setSinglePlace(data);
+      }
+    }
   }
 
   if (!singlePlace) {
@@ -110,111 +120,35 @@ function PlaceShow() {
   }
   return (
     <>
-      <section className="m-6">
-        <h1 className="title is-1 has-text-centered">{singlePlace.name}</h1>
-        <div className="columns">
-          <div className="column is-6 is-centered image-and-map-column">
-            <div className="tabs is-boxed">
+      <section className='m-6'>
+        <h1 className='title is-1 has-text-centered'>{singlePlace.name}</h1>
+        <div className='columns'>
+          <div className='column is-6 is-centered image-and-map-column'>
+            <div className='tabs is-boxed'>
               <ul>
                 <li
                   className={tabIsActive ? 'is-active' : ''}
-                  data-target="image"
+                  data-target='image'
                   onClick={handleTabClick}
                 >
                   <a>Image</a>
                 </li>
                 <li
                   className={tabIsActive ? '' : 'is-active'}
-                  data-target="map"
+                  data-target='map'
                   onClick={handleTabClick}
                 >
                   <a>Map</a>
                 </li>
               </ul>
             </div>
-            <div id="image-view" className={tabIsActive ? '' : 'is-hidden'}>
-              <figure className="image">
+            <div id='image-view' className={tabIsActive ? '' : 'is-hidden'}>
+              <figure className='image'>
                 <img src={singlePlace.image} alt={singlePlace.name} />
               </figure>
-            </div>
-            {!tabIsActive && (
-              <div id="map-view">
-                <Map
-                  initialViewState={{
-                    latitude: singlePlace.lat,
-                    longitude: singlePlace.long,
-                    zoom: 12,
-                  }}
-                  style={{ width: '100%', height: '100%' }}
-                  mapStyle="mapbox://styles/mapbox/streets-v9"
-                  mapboxAccessToken={MAPBOX_TOKEN}
-                >
-                  <Marker
-                    longitude={singlePlace.long}
-                    latitude={singlePlace.lat}
-                    color="red"
-                  />
-                </Map>
-              </div>
-            )}
-          </div>
 
-          {/* About Section */}
-          <div className="column is-6">
-            <h2 className="title has-text-centered mt-6">About</h2>
-            <p className="content is-medium mb-6">{singlePlace.description}</p>
-            <div className="columns has-text-centered">
-              <div className="column">
-                <p className="subtitle">
-                  <span className="icon">
-                    <i className="fa-solid fa-clock"></i>
-                  </span>
-                  <span>
-                    <strong>Opening Times:</strong> <br />
-                    {singlePlace.openingTimes}
-                  </span>
-                </p>
-
-                <p className="subtitle">
-                  <span className="icon">
-                    <i className="fa-solid fa-circle-info"></i>
-                  </span>
-                  <span>
-                    <strong>Website</strong>
-                    <br />
-                    <a href={singlePlace.contact}>Click Here</a>
-                  </span>
-                </p>
-              </div>
-
-              <div className="column">
-                <p className="subtitle">
-                  <span className="icon">
-                    <i className="fa-solid fa-train-subway"></i>
-                  </span>
-                  <span>
-                    <strong>Tube:</strong>
-                    <br /> {singlePlace.stationName}
-                  </span>
-                </p>
-
-                <p className="subtitle">
-                  <span className="icon">
-                    <i className="fa-solid fa-file-lines"></i>
-                  </span>
-                  <span>
-                    <strong>Category:</strong>
-                    <br />
-                    {singlePlace.category.map((category) => (
-                      <span>{category} </span>
-                    ))}
-                  </span>
-                </p>
-              </div>
-            </div>
-            <div className="container has-text-centered">
               <div
-                className="heart container has-text-centered"
+                className='heart container has-text-centered'
                 style={{ width: '3rem' }}
               >
                 <Heart
@@ -224,7 +158,7 @@ function PlaceShow() {
                   }}
                 />
                 <p
-                  id="like-count"
+                  id='like-count'
                   onClick={() => {
                     handleAddOrRemoveLike();
                   }}
@@ -232,15 +166,98 @@ function PlaceShow() {
                   {singlePlace.likes.length}
                 </p>
               </div>
+            </div>
+            {!tabIsActive && (
+              <div id='map-view'>
+                <Map
+                  initialViewState={{
+                    latitude: singlePlace.lat,
+                    longitude: singlePlace.long,
+                    zoom: 12,
+                  }}
+                  style={{ width: '100%', height: '100%' }}
+                  mapStyle='mapbox://styles/mapbox/streets-v9'
+                  mapboxAccessToken={MAPBOX_TOKEN}
+                >
+                  <Marker
+                    longitude={singlePlace.long}
+                    latitude={singlePlace.lat}
+                    color='red'
+                  />
+                </Map>
+              </div>
+            )}
+          </div>
 
+          {/* About Section */}
+          <div className='column is-6'>
+            <h2 className='title has-text-centered mt-6'>About</h2>
+            <p className='content is-medium mb-6'>{singlePlace.description}</p>
+            <div className='columns has-text-centered'>
+              <div className='column'>
+                <p className='subtitle'>
+                  <span className='icon'>
+                    <i className='fa-solid fa-clock'></i>
+                  </span>
+                  <span>
+                    <strong>Opening Times:</strong> <br />
+                    {singlePlace.openingTimes}
+                  </span>
+                </p>
+
+                <p className='subtitle'>
+                  <span className='icon'>
+                    <i className='fa-solid fa-circle-info'></i>
+                  </span>
+                  <span>
+                    <strong>Website</strong>
+                    <br />
+                    <a href={singlePlace.contact}>Click Here</a>
+                  </span>
+                </p>
+              </div>
+
+              <div className='column'>
+                <p className='subtitle'>
+                  <span className='icon'>
+                    <i className='fa-solid fa-train-subway'></i>
+                  </span>
+                  <span>
+                    <strong>Tube Station(s):</strong>
+                    <br />
+                    {singlePlace.stationName.map((station) => (
+                      <>
+                        <span key={uuidv4()}>{station} </span> <br />
+                      </>
+                    ))}
+                  </span>
+                </p>
+
+                <p className='subtitle'>
+                  <span className='icon'>
+                    <i className='fa-solid fa-file-lines'></i>
+                  </span>
+                  <span>
+                    <strong>Category:</strong>
+                    <br />
+                    {singlePlace.category.map((category) => (
+                      <>
+                        <span key={uuidv4()}>{category} </span> <br />
+                      </>
+                    ))}
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div className='container has-text-centered'>
               <button
-                className="button has-text-centered is-info is-rounded"
+                className='button has-text-centered is-info is-rounded'
                 onClick={handleAddOrRemoveItinerary}
               >
-                <span className="icon">
-                  <i className="fa-solid fa-clipboard-list"></i>
+                <span className='icon'>
+                  <i className='fa-solid fa-clipboard-list'></i>
                 </span>
-                <span>Add to Itinary</span>
+                <span>Add to Itinary {singlePlace.itenerary.length}</span>
               </button>
             </div>
           </div>
@@ -248,43 +265,43 @@ function PlaceShow() {
         <hr />
 
         {/* Add a Review */}
-        <h2 className="title has-text-centered">Reviews</h2>
-        <div className="columns is-centered">
+        <h2 className='title has-text-centered'>Reviews</h2>
+        <div className='columns is-centered'>
           {getLoggedInUserId() && (
-            <div className="column is-5">
-              <div className="form">
-                <label htmlFor="rating" className="label">
+            <div className='column is-5'>
+              <div className='form'>
+                <label htmlFor='rating' className='label'>
                   Rating:
                 </label>
                 <Rating
-                  name="simple-controlled"
-                  id="rating"
-                  name="rating"
+                  name='simple-controlled'
+                  id='rating'
+                  name='rating'
                   value={review?.rating}
                   onChange={handleReviewChange}
                 />
-                <label htmlFor="comment" className="label">
+                <label htmlFor='comment' className='label'>
                   Review:
                 </label>
-                <div className="field">
-                  <div className="control">
+                <div className='field'>
+                  <div className='control'>
                     <textarea
-                      className="textarea"
-                      placeholder="Normal textarea"
-                      id="comment"
-                      name="comment"
+                      className='textarea'
+                      placeholder='Normal textarea'
+                      id='comment'
+                      name='comment'
                       value={review?.comment}
                       onChange={handleReviewChange}
                     ></textarea>
                   </div>
                 </div>
                 <button
-                  className="button mt-3 is-info"
-                  type="submit"
+                  className='button mt-3 is-info'
+                  type='submit'
                   onClick={handleReviewSubmit}
                 >
-                  <span className="icon">
-                    <i className="fa-solid fa-pen-to-square"></i>
+                  <span className='icon'>
+                    <i className='fa-solid fa-pen-to-square'></i>
                   </span>
                   <span>Leave a Review</span>
                 </button>
@@ -292,28 +309,28 @@ function PlaceShow() {
             </div>
           )}
 
-          <div className="column is-1"></div>
+          <div className='column is-1'></div>
           {/* Displays the Reviews */}
-          <div className="column is-5">
+          <div className='column is-5'>
             {!singlePlace.reviews.length && (
               <p>
                 No current reviews for this place. Please log in to leave one.
               </p>
             )}
             {singlePlace.reviews.map((review) => (
-              <div className="box" key={review._id}>
-                <article className="media">
-                  <div className="media-left">
-                    <figure className="image is-64x64">
+              <div className='box' key={review._id}>
+                <article className='media'>
+                  <div className='media-left'>
+                    <figure className='image is-64x64'>
                       <img
                         src={getUserInfo(review.createdBy)?.image}
-                        alt="User Profile Image"
+                        alt='User Profile Image'
                       />
                     </figure>
                   </div>
-                  <div className="media-content">
-                    <div className="content">
-                      <Rating name="read-only" value={review.rating} readOnly />
+                  <div className='media-content'>
+                    <div className='content'>
+                      <Rating name='read-only' value={review.rating} readOnly />
                       <p>
                         <strong>{getUserInfo(review.createdBy)?.name}</strong>
                         <br />
@@ -325,8 +342,8 @@ function PlaceShow() {
                     {(getLoggedInUserId() === review.createdBy ||
                       isAdmin()) && (
                       <button
-                        type="button"
-                        className="button is-danger is-small is-outlined"
+                        type='button'
+                        className='button is-danger is-small is-outlined'
                         onClick={() => handleDeleteReview(review._id)}
                       >
                         Delete Review
@@ -343,8 +360,8 @@ function PlaceShow() {
       <hr />
 
       {/* Carousel Section */}
-      <section className="section">
-        <p className="title has-text-centered">Suggestions</p>
+      <section className='section'>
+        <p className='title has-text-centered'>Suggestions</p>
         <Splide
           options={{
             type: 'loop',

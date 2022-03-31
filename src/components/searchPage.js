@@ -3,26 +3,21 @@ import { getAllPlaces } from '../api/places.js';
 import { getPlaceByCategory } from '../api/places.js';
 import PlaceCard from './PlaceCard.js';
 import MapSearch from './MapSearch.js';
-
 const SearchPage = () => {
   const [allPlaces, setAllPlaces] = React.useState(null);
   const [filteredPlace, setFilteredPlace] = React.useState(null);
   const [categories, setCategories] = React.useState(null);
-
   React.useEffect(() => {
     const getData = async () => {
       try {
         const placeData = await getAllPlaces();
         setAllPlaces(placeData);
-        setFilteredPlace(placeData);
-        setCategories(placeData);
       } catch (err) {
         console.log('get all places error: ', err);
       }
     };
     getData();
   }, []);
-
   function getCategories(event) {
     if (event.target.value === 'all') {
       setCategories(allPlaces);
@@ -40,7 +35,6 @@ const SearchPage = () => {
       getData();
     }
   }
-
   function nameSearch(event) {
     let newData = [];
     if (filteredPlace) {
@@ -54,7 +48,6 @@ const SearchPage = () => {
       console.log(filteredPlace);
     }
   }
-
   return (
     <>
       <section className="search-section">
@@ -78,7 +71,6 @@ const SearchPage = () => {
                   </p>
                 </div>
               </div>
-
               <div className="column is-2">
                 <div className="field">
                   <label className="label">Category</label>
@@ -101,9 +93,7 @@ const SearchPage = () => {
             </div>
           </div>
         </div>
-
         <hr id="search-page-line" />
-
         <div className="section search-display-wrapper">
           {!filteredPlace ? (
             <p>Loading ..</p>
@@ -135,5 +125,4 @@ const SearchPage = () => {
     </>
   );
 };
-
 export default SearchPage;
