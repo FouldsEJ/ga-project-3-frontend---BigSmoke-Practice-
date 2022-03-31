@@ -12,8 +12,6 @@ const SearchPage = () => {
       try {
         const placeData = await getAllPlaces();
         setAllPlaces(placeData);
-        setFilteredPlace(placeData);
-        setCategories(placeData);
       } catch (err) {
         console.log('get all places error: ', err);
       }
