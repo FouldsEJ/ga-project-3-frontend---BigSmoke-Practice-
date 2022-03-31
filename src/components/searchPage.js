@@ -62,8 +62,8 @@ const SearchPage = () => {
         <div className='container'>
           <div className='columns mb-3 is-centered'>
             <div className='column is-2'>
-              <div class='field'>
-                <label class='label'>Search Keyword</label>
+              <div className='field'>
+                <label className='label'>Search Keyword</label>
                 <p className='control has-icons-left'>
                   <input
                     type='text'
@@ -79,8 +79,8 @@ const SearchPage = () => {
             </div>
 
             <div className='column is-2'>
-              <div class='field'>
-                <label class='label'>Category</label>
+              <div className='field'>
+                <label className='label'>Category</label>
                 <span className='select'>
                   <select
                     name='categories'
@@ -109,11 +109,11 @@ const SearchPage = () => {
         ) : (
           <>
             <div className='columns'>
-              <div className='column'>
-                <div className='columns is-multiline'>
+              <div className='column '>
+                <div className='columns is-multiline scroll'>
                   {filteredPlace.map((place) => (
                     <div
-                      className='column is-one-quarter-desktop is-half-tablet is-one-mobile mt-6'
+                      className='column is-one-third-desktop is-half-tablet is-one-mobile mt-6 placecard'
                       key={place._id}
                     >
                       <PlaceCard {...place} />

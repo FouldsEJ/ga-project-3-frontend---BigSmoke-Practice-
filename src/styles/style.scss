@@ -1,5 +1,7 @@
 @import '~bulma/bulma.sass';
-
+body {
+  font-family: 'Kalam', cursive;
+}
 img {
   border-radius: 5px;
 }
@@ -112,8 +114,12 @@ img {
 
 .map-search {
   width: 100%;
-  height: 100vh;
+  height: 550px;
   position: relative;
+}
+
+.placecard {
+  margin-top: 0 !important;
 }
 
 #search-page-line {
@@ -132,3 +138,9 @@ img {
   // white-space: nowrap;
   overflow: hidden;
 }
+.scroll {
+  overflow-y: auto;
+  max-height: 550px;
+  margin-top: 0px;
+}
+// place card
