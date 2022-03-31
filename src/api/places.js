@@ -54,6 +54,16 @@ export const getPlaceByCategory = async (category) => {
   return data;
 };
 
+export const getPlaceBySearch = async (text, category, station) => {
+  const options = {
+    method: 'GET',
+    url: `/places/search?text=${text}&category=${category}&station=${station}`,
+  };
+  const { data } = await axios.request(options);
+
+  return data;
+};
+
 export const getAllStations = async () => {
   const options = {
     method: 'GET',
