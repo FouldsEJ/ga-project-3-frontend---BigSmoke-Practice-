@@ -351,7 +351,7 @@ function PlaceShow() {
             arrows: true | 'slider',
             pagination: false,
             drag: 'free',
-            gap: '10px',
+            gap: '20px',
             breakpoints: {
               1024: {
                 perPage: 3,

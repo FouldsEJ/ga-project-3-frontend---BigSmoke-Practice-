@@ -66,31 +66,40 @@ function Home() {
           </div>
         </section>
 
-        <section className='hero is-halfheight is-light'>
-          <div className='hero-body '>
-            <div className='container'>
-              <p className='title'>Most popular</p>
-              <Splide
-                options={{
-                  perPage: 3,
-                  rewind: true,
-                  arrows: true,
-                  pagination: false,
-                  drag: 'free',
-                  gap: '5px',
-                }}
-              >
-                {popular ? (
-                  popular.map((place) => (
-                    <SplideSlide key={place._id}>
-                      <PlaceCard key={place._id} {...place} />
-                    </SplideSlide>
-                  ))
-                ) : (
-                  <p>Loading...</p>
-                )}
-              </Splide>
-            </div>
+        <section className='hero is-light'>
+          <div className='hero-body'>
+            <p className='title'>Most popular</p>
+            <Splide
+              options={{
+                perPage: 3,
+                rewind: true,
+                arrows: true,
+                pagination: false,
+                drag: 'free',
+                gap: '20px',
+                breakpoints: {
+                  1024: {
+                    perPage: 3,
+                  },
+                  768: {
+                    perPage: 2,
+                  },
+                  500: {
+                    perPage: 1,
+                  },
+                },
+              }}
+            >
+              {popular ? (
+                popular.map((place) => (
+                  <SplideSlide key={place._id}>
+                    <PlaceCard key={place._id} {...place} />
+                  </SplideSlide>
+                ))
+              ) : (
+                <p>Loading...</p>
+              )}
+            </Splide>
           </div>
         </section>
       </main>
