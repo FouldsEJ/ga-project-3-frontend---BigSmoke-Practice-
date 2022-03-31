@@ -48,7 +48,9 @@ function PlaceShow() {
       const categoryData = await getPlaceByCategory(place.category[0]);
       setCategory(categoryData);
 
-      setHeartActive(place.likes.includes(getLoggedInUserId()));
+      console.log(id);
+
+      setHeartActive(localStorage.getItem(id) === id);
 
       const allUsersData = await getAllUsers();
       setAllUsers(allUsersData);
@@ -92,15 +94,16 @@ function PlaceShow() {
   }
 
   async function handleAddOrRemoveLike() {
-    if (getLoggedInUserId()) {
-      setHeartActive(!heartActive);
-      if (singlePlace.likes.includes(getLoggedInUserId())) {
-        const data = await removeLike(id);
-        setSinglePlace(data);
-      } else {
-        const data = await addLike(id);
-        setSinglePlace(data);
-      }
+    setHeartActive(!heartActive);
+    const pressedAlready = localStorage.getItem(id);
+    if (pressedAlready) {
+      const data = await removeLike(id);
+      localStorage.removeItem(id);
+      setSinglePlace(data);
+    } else {
+      const data = await addLike(id);
+      localStorage.setItem(id, id);
+      setSinglePlace(data);
     }
   }
 
@@ -163,7 +166,7 @@ function PlaceShow() {
                     handleAddOrRemoveLike();
                   }}
                 >
-                  {singlePlace.likes.length}
+                  {singlePlace.likes}
                 </p>
               </div>
             </div>
@@ -225,9 +228,9 @@ function PlaceShow() {
                       <strong>Tube Station(s):</strong>
                       <br />
                       {singlePlace.stationName.map((station) => (
-                        <>
+                        <React.Fragment key={uuidv4()}>
                           <span key={uuidv4()}>{station} </span> <br />
-                        </>
+                        </React.Fragment>
                       ))}
                     </span>
                   </p>
@@ -240,9 +243,9 @@ function PlaceShow() {
                       <strong>Category:</strong>
                       <br />
                       {singlePlace.category.map((category) => (
-                        <>
+                        <React.Fragment key={uuidv4()}>
                           <span key={uuidv4()}>{category} </span> <br />
-                        </>
+                        </React.Fragment>
                       ))}
                     </span>
                   </p>
