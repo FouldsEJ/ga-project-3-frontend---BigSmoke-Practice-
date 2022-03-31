@@ -11,7 +11,7 @@ import {
   getPlaceById,
   getPlaceByCategory,
   addLike,
-  removeLike
+  removeLike,
 } from '../api/places';
 import PlaceCard from './PlaceCard';
 import { createReview, deleteReview } from '../api/reviews';
@@ -21,7 +21,7 @@ import { getAllUsers } from '../api/auth';
 
 const initialReview = {
   comment: '',
-  rating: null
+  rating: null,
 };
 
 function PlaceShow() {
@@ -35,7 +35,7 @@ function PlaceShow() {
   const [view, setViewport] = React.useState({
     latitude: 51.507351,
     longitude: -0.127758,
-    zoom: 12
+    zoom: 12,
   });
   const { id } = useParams();
   const MAPBOX_TOKEN = `${process.env.MAP_BOX_ACCESS_TOKEN}`;
@@ -110,52 +110,52 @@ function PlaceShow() {
   }
   return (
     <>
-      <section className='m-6'>
-        <h1 className='title has-text-centered'>{singlePlace.name}</h1>
-        <div className='columns'>
-          <div className='column is-6 is-centered image-and-map-column'>
-            <div className='tabs is-boxed'>
+      <section className="m-6">
+        <h1 className="title has-text-centered">{singlePlace.name}</h1>
+        <div className="columns">
+          <div className="column is-6 is-centered image-and-map-column">
+            <div className="tabs is-boxed">
               <ul>
                 <li
                   className={tabIsActive ? 'is-active' : ''}
-                  data-target='image'
+                  data-target="image"
                   onClick={handleTabClick}
                 >
                   <a>Image</a>
                 </li>
                 <li
                   className={tabIsActive ? '' : 'is-active'}
-                  data-target='map'
+                  data-target="map"
                   onClick={handleTabClick}
                 >
                   <a>Map</a>
                 </li>
               </ul>
             </div>
-            <div id='image-view' className={tabIsActive ? '' : 'is-hidden'}>
-              <figure className='image'>
+            <div id="image-view" className={tabIsActive ? '' : 'is-hidden'}>
+              <figure className="image">
                 <img src={singlePlace.image} alt={singlePlace.name} />
               </figure>
             </div>
             {!tabIsActive && (
-              <div id='map-view'>
+              <div id="map-view">
                 <Map
                   initialViewState={{ ...view }}
                   style={{ width: '100%', height: '100%' }}
-                  mapStyle='mapbox://styles/mapbox/streets-v9'
+                  mapStyle="mapbox://styles/mapbox/streets-v9"
                   mapboxAccessToken={MAPBOX_TOKEN}
                   onViewportChange={(viewport) => setViewport(viewport)}
                 >
                   <Marker
                     longitude={singlePlace.long}
                     latitude={singlePlace.lat}
-                    color='red'
+                    color="red"
                   />
                 </Map>
               </div>
             )}
-            <div className='is-centered'>
-              <div className='heart is-centered' style={{ width: '3rem' }}>
+            <div className="is-centered">
+              <div className="heart is-centered" style={{ width: '3rem' }}>
                 <Heart
                   isActive={heartActive}
                   onClick={() => {
@@ -163,7 +163,7 @@ function PlaceShow() {
                   }}
                 />
                 <p
-                  id='like-count'
+                  id="like-count"
                   onClick={() => {
                     handleAddOrRemoveLike();
                   }}
@@ -173,62 +173,62 @@ function PlaceShow() {
               </div>
             </div>
           </div>
-          <div className='column is-6'>
-            <h2 className='title has-text-centered'>About</h2>
+          <div className="column is-6">
+            <h2 className="title has-text-centered">About</h2>
             <p>{singlePlace.description}</p>
-            <div className='columns has-text-centered'>
-              <div className='column'>
+            <div className="columns has-text-centered">
+              <div className="column">
                 <p>{singlePlace.openingTimes}</p>
                 <p>{singlePlace.contact}</p>
               </div>
-              <div className='column'>
+              <div className="column">
                 <p>{singlePlace.stationName}</p>
                 <p>{singlePlace.category}</p>
               </div>
             </div>
             <hr />
-            <h2 className='title has-text-centered'>Reviews</h2>
+            <h2 className="title has-text-centered">Reviews</h2>
             {console.log(getLoggedInUserId())}
             {getLoggedInUserId() && (
-              <div className='form'>
-                <label htmlFor='rating' className='label'>
+              <div className="form">
+                <label htmlFor="rating" className="label">
                   Rating:
                 </label>
                 <Rating
-                  name='simple-controlled'
-                  id='rating'
-                  name='rating'
+                  name="simple-controlled"
+                  id="rating"
+                  name="rating"
                   value={review?.rating}
                   onChange={handleReviewChange}
                 />
-                <label htmlFor='comment' className='label'>
+                <label htmlFor="comment" className="label">
                   Review:
                 </label>
                 <textarea
-                  type='text'
-                  id='comment'
-                  name='comment'
-                  className='input'
+                  type="text"
+                  id="comment"
+                  name="comment"
+                  className="input"
                   value={review?.comment}
                   onChange={handleReviewChange}
                 />
                 <button
-                  className='button mt-3'
-                  type='submit'
+                  className="button mt-3"
+                  type="submit"
                   onClick={handleReviewSubmit}
                 >
                   Leave a Review
                 </button>
               </div>
             )}
-            <div className='container'>
+            <div className="container">
               {singlePlace.reviews.map((review) => (
-                <div className='box' key={review._id}>
-                  <Rating name='read-only' value={review.rating} readOnly />
+                <div className="box" key={review._id}>
+                  <Rating name="read-only" value={review.rating} readOnly />
                   {(getLoggedInUserId() === review.createdBy || isAdmin()) && (
                     <button
-                      type='button'
-                      className='button is-danger is-small is-outlined'
+                      type="button"
+                      className="button is-danger is-small is-outlined"
                       onClick={() => handleDeleteReview(review._id)}
                     >
                       Delete Review
@@ -238,7 +238,7 @@ function PlaceShow() {
                   <p>Reviewed by: {review.createdBy}</p>
                   <div>
                     <img
-                      className='reviewPicture'
+                      className="reviewPicture"
                       src={getImage(review.createdBy)}
                     />
                   </div>
@@ -249,10 +249,10 @@ function PlaceShow() {
         </div>
       </section>
 
-      <section className='hero is-halfheight is-light'>
-        <div className='hero-body '>
-          <div className='container'>
-            <p className='title'>Most popular</p>
+      <section className="hero is-halfheight is-light">
+        <div className="hero-body ">
+          <div className="container">
+            <p className="title">Most popular</p>
             <Splide
               options={{
                 perPage: 3,
@@ -260,7 +260,7 @@ function PlaceShow() {
                 arrows: true,
                 pagination: false,
                 drag: 'free',
-                gap: '5px'
+                gap: '5px',
               }}
             >
               {category ? (
