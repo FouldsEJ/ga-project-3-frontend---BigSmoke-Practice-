@@ -32,7 +32,7 @@ function Login() {
   }
 
   return (
-    <section className='section'>
+    <section className='section login-section'>
       <div className='container'>
         <Popup trigger={popup} setTrigger={setPopup}>
           <h2>The email and password you entered did not match our records.</h2>

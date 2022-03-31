@@ -4,13 +4,19 @@ import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 import PlaceCard from './PlaceCard.js';
 import Popup from './Popup';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCity } from '@fortawesome/free-solid-svg-icons';
 
 function Home() {
   const [popular, setPopular] = useState([]);
   const [timedPopup, setTimedPopup] = useState(false);
+  const navigate = useNavigate();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    navigate('/explore');
+  }
 
   React.useEffect(() => {
     const getData = async () => {
@@ -31,31 +37,40 @@ function Home() {
         <Popup trigger={timedPopup} setTrigger={setTimedPopup}>
           {' '}
           <h2> Hi there! </h2>
-          <p>What are your plans today?</p>
-          <hr />
+          <p>
+            One of the world’s most visited cities, England’s buzzing capital is
+            well worth the visit and has so much to offer, from magnificent
+            history and culture to cutting-edge fashion and food. From Camden’s
+            punky vibe to leafy Hampstead Heath and historic Big Ben, London’s
+            incomparable blend of influences, traditions and history make it an
+            unmissable destination for travellers.
+          </p>
           <p>
             {' '}
-            <Link to='/explore'>Click here for some ideas.</Link>
+            <Link to="/explore">Click here to explore London!</Link>
           </p>
         </Popup>
 
-        <section className='hero is-medium is-light' id='hero-image'>
-          <div className='hero-body is-flex '>
-            <div className='container  has-text-centered'>
-              <h1 className='title dispaly has-text-grey is-size-2'>
+        <section className="hero is-medium is-light" id="hero-image">
+          <div className="hero-body is-flex ">
+            <div className="container hero-container overlay">
+              <h1 className="title display hero-title">
                 <FontAwesomeIcon icon={faCity} />
                 <span> The Big Smoke</span>
               </h1>
-              <h2 className='block'>Discover London from real people </h2>
+              <h2 className="block">Discover London from Londoners </h2>
+              <button className="button btn is-rounded" onClick={handleSubmit}>
+                Explore
+              </button>
             </div>
           </div>
         </section>
 
-        <section className='hero is-medium is-light' id='hero-text'>
-          <div className='container is-max-widescreen'>
-            <h3 className='title'> Welcome to London!</h3>
+        <section className="hero is-medium is-light" id="hero-text">
+          <div className="container is-max-widescreen">
+            <h3 className="title"> Welcome to London!</h3>
 
-            <h2 className='block'>
+            <h2 className="block">
               Discover the best of London with Visit London, the independent
               guide to England’s exciting capital. Find things to do in London,
               from iconic sightseeing spots and fun-filled days out to top
@@ -66,9 +81,9 @@ function Home() {
           </div>
         </section>
 
-        <section className='hero is-light'>
-          <div className='hero-body'>
-            <p className='title'>Most popular</p>
+        <section className="hero is-light">
+          <div className="hero-body">
+            <p className="title">Most popular</p>
             <Splide
               options={{
                 perPage: 3,
