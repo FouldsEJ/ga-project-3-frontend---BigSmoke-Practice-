@@ -146,6 +146,26 @@ function PlaceShow() {
               <figure className='image'>
                 <img src={singlePlace.image} alt={singlePlace.name} />
               </figure>
+
+              <div
+                className='heart container has-text-centered'
+                style={{ width: '3rem' }}
+              >
+                <Heart
+                  isActive={heartActive}
+                  onClick={() => {
+                    handleAddOrRemoveLike();
+                  }}
+                />
+                <p
+                  id='like-count'
+                  onClick={() => {
+                    handleAddOrRemoveLike();
+                  }}
+                >
+                  {singlePlace.likes.length}
+                </p>
+              </div>
             </div>
             {!tabIsActive && (
               <div id='map-view'>
@@ -230,26 +250,6 @@ function PlaceShow() {
               </div>
             </div>
             <div className='container has-text-centered'>
-              <div
-                className='heart container has-text-centered'
-                style={{ width: '3rem' }}
-              >
-                <Heart
-                  isActive={heartActive}
-                  onClick={() => {
-                    handleAddOrRemoveLike();
-                  }}
-                />
-                <p
-                  id='like-count'
-                  onClick={() => {
-                    handleAddOrRemoveLike();
-                  }}
-                >
-                  {singlePlace.likes.length}
-                </p>
-              </div>
-
               <button
                 className='button has-text-centered is-info is-rounded'
                 onClick={handleAddOrRemoveItinerary}
