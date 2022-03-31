@@ -28,15 +28,6 @@ export const loginUser = async (credentials) => {
   return data;
 };
 
-//export const getImage = async (userId) => {
-//  const options = {
-//    method: 'GET',
-//    url: `/api/user?user=${userId}`
-//  };
-//  const { data } = await axios.request(options);
-//  return data;
-//};
-
 export const getAllUsers = async () => {
   const options = {
     method: 'GET',
@@ -54,12 +45,3 @@ export const getUser = async (id) => {
     console.log(err);
   }
 };
-
-//export const postImage = async (image) => {
-//  try {
-//    const { data } = await axios.post('/api/images', image);
-//    console.log(data);
-//  } catch (err) {
-//    console.log(err);
-//  }
-//};

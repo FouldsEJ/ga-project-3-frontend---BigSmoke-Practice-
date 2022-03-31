@@ -2,9 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const PlaceCard = ({ _id, name, image, stationName }) => {
-  {
-    console.log(_id);
-  }
   return (
     <Link to={`/explore/${_id}`}>
       <div className='card'>
