@@ -1,7 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Map, { Marker, FullscreenControl, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useNavigate } from 'react-router-dom';
+import PlaceCard from './PlaceCard';
 
 function MapSearch(props) {
   const [showPopup, setShowPopup] = React.useState(null);
@@ -46,7 +48,6 @@ function MapSearch(props) {
         mapStyle='mapbox://styles/mapbox/streets-v9'
         mapboxAccessToken={MAPBOX_TOKEN}
         attributionControl={false}
-        onClick={() => setShowPopup(null)}
       >
         <FullscreenControl />
         {props.filteredPlace.map((place) => (
@@ -56,26 +57,22 @@ function MapSearch(props) {
             latitude={place.lat}
             color='#6795c1'
             onClick={() => setShowPopup(place)}
-            onMouseOut={() => setShowPopup(null)}
           />
         ))}
         {console.log('SHow pop up: ', showPopup)}
         {showPopup && (
-          <Popup
-            longitude={showPopup.long}
-            latitude={showPopup.lat}
-            anchor='bottom'
-            // onClose={() => setShowPopup(false)}
-          >
-            <h2>{showPopup.name}</h2>
-            <button
-              className='button is-link is-light is-small'
-              onClick={() => handlePopUpClick(showPopup._id)}
+          <Link to={`/explore/${showPopup._id}`}>
+            <Popup
+              longitude={showPopup.long}
+              latitude={showPopup.lat}
+              anchor='bottom'
+              closeOnClick={false}
+              onClose={() => setShowPopup(null)}
             >
-              See more....
-            </button>
-            <img src={showPopup.image} alt={showPopup.name} />
-          </Popup>
+              <h2>{showPopup.name}</h2>
+              <img src={showPopup.image} alt={showPopup.name} />
+            </Popup>
+          </Link>
         )}
       </Map>
     </>

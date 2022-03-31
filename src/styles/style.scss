@@ -192,3 +192,21 @@ hr {
   opacity: 1;
   transform: scale(1.05);
 }
+
+//Map Search
+.mapboxgl-popup-content {
+  text-align: center;
+  background-color: #6795c1;
+  max-width: 150px;
+  max-height: 200px;
+  border-radius: 10px;
+
+  h2 {
+    font-weight: bold;
+    color: white;
+  }
+
+  img {
+    min-width: 100%;
+  }
+}
