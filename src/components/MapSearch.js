@@ -4,14 +4,14 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { useNavigate } from 'react-router-dom';
 
 function MapSearch(props) {
-  const [showPopup, setShowPopup] = React.useState(false);
+  const [showPopup, setShowPopup] = React.useState(null);
 
   const navigate = useNavigate();
   const MAPBOX_TOKEN = `${process.env.MAP_BOX_ACCESS_TOKEN}`;
 
-  function handlePopUpClick(placeId) {
-    navigate(`/explore/${placeId}`);
-  }
+  // function handlePopUpClick(placeId) {
+  //   navigate(`/explore/${placeId}`);
+  // }
 
   // function setColour(category) {
   //   console.log(category);
@@ -46,37 +46,37 @@ function MapSearch(props) {
         mapStyle='mapbox://styles/mapbox/streets-v9'
         mapboxAccessToken={MAPBOX_TOKEN}
         attributionControl={false}
+        onClick={() => setShowPopup(null)}
       >
         <FullscreenControl />
         {props.filteredPlace.map((place) => (
-          <React.Fragment key={place._id}>
-            {/* {setShowPopup({ ...showPopup, [place._id]: true })} */}
-            <Marker
-              longitude={place.long}
-              latitude={place.lat}
-              color='blue'
-              onClick={() => setShowPopup(place._id)}
-            />
-
-            {showPopup && (
-              <Popup
-                longitude={place.long}
-                latitude={place.lat}
-                anchor='bottom'
-                onClose={() => setShowPopup(false)}
-              >
-                <h2>{place.name}</h2>
-                <button
-                  className='button is-link is-light is-small'
-                  onClick={() => handlePopUpClick(place._id)}
-                >
-                  See more....
-                </button>
-                <img src={place.image} alt={place.name} />
-              </Popup>
-            )}
-          </React.Fragment>
+          <Marker
+            key={place._id}
+            longitude={place.long}
+            latitude={place.lat}
+            color='#6795c1'
+            onClick={() => setShowPopup(place)}
+            onMouseOut={() => setShowPopup(null)}
+          />
         ))}
+        {console.log('SHow pop up: ', showPopup)}
+        {showPopup && (
+          <Popup
+            longitude={showPopup.long}
+            latitude={showPopup.lat}
+            anchor='bottom'
+            // onClose={() => setShowPopup(false)}
+          >
+            <h2>{showPopup.name}</h2>
+            <button
+              className='button is-link is-light is-small'
+              onClick={() => handlePopUpClick(showPopup._id)}
+            >
+              See more....
+            </button>
+            <img src={showPopup.image} alt={showPopup.name} />
+          </Popup>
+        )}
       </Map>
     </>
   );

@@ -11,7 +11,6 @@ function ProfilePage() {
   const userId = getLoggedInUserId();
   const [likedPlace, setlikedPlace] = React.useState(null);
   const [profilePicture, setProfilePicture] = React.useState(null);
-  const [imageData, setImageData] = React.useState(null);
 
   React.useEffect(() => {
     const getData = async () => {
@@ -19,8 +18,6 @@ function ProfilePage() {
       setlikedPlace(likedPlaces);
       const user = await getUser(userId);
       setProfilePicture(user.image);
-      //const userImage = await getImage(userId);
-      //setProfilePicture(userImage);
     };
     getData();
   }, []);
@@ -34,31 +31,6 @@ function ProfilePage() {
     getData();
   }
 
-  const handleUpload = () => {
-    window.cloudinary
-      .createUploadWidget(
-        {
-          cloudName: process.env.CLOUD_NAME,
-          uploadPreset: process.env.UPLOAD_PRESET,
-          cropping: true
-        },
-        (err, result) => {
-          if (result.event !== 'success') {
-            return;
-          }
-          setImageData({
-            url: result.info.secure_url,
-            user: userId
-          });
-        }
-      )
-      .open();
-  };
-
-  async function handleSubmit() {
-    setProfilePicture(imageData);
-  }
-
   return (
     <>
       <div className='container has-text-centered'>
@@ -67,12 +39,7 @@ function ProfilePage() {
         </div>
         {!profilePicture ? (
           <div>
-            <button className='button' onClick={handleUpload}>
-              Click to upload an image
-            </button>
-            <button className='button' onClick={handleSubmit}>
-              Submit and return
-            </button>
+            <p>No Photo</p>
           </div>
         ) : (
           <img src={profilePicture} className='image-card profilePicture' />
