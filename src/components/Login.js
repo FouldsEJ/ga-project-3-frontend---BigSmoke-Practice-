@@ -23,7 +23,7 @@ function Login() {
       try {
         await loginUser(user);
 
-        navigate('/');
+        navigate('/profile');
       } catch (error) {
         setPopup(true);
       }
@@ -32,56 +32,56 @@ function Login() {
   }
 
   return (
-    <section className="section">
-      <div className="container">
+    <section className='section'>
+      <div className='container'>
         <Popup trigger={popup} setTrigger={setPopup}>
           <h2>The email and password you entered did not match our records.</h2>
           <h2> Please double-check and try again or Register.</h2>
         </Popup>
-        <div className="columns">
+        <div className='columns'>
           <form
             onSubmit={handleSubmit}
-            className="box column is-half is-offset-one-quarter"
+            className='box column is-half is-offset-one-quarter'
           >
-            <div className="field is-small">
-              <label htmlFor="email" className="label">
+            <div className='field is-small'>
+              <label htmlFor='email' className='label'>
                 Email
               </label>
-              <div className="control has-icons-left">
+              <div className='control has-icons-left'>
                 <input
-                  placeholder="Email"
-                  name="email"
-                  type="text"
-                  className="input"
-                  id="email"
+                  placeholder='Email'
+                  name='email'
+                  type='text'
+                  className='input'
+                  id='email'
                   value={user.email}
                   onChange={handleChange}
                 ></input>
-                <span className="icon is-small is-left">
-                  <i className="fas fa-envelope"></i>
+                <span className='icon is-small is-left'>
+                  <i className='fas fa-envelope'></i>
                 </span>
               </div>
             </div>
-            <div className="field">
-              <label htmlFor="password" className="label">
+            <div className='field'>
+              <label htmlFor='password' className='label'>
                 Password
               </label>
-              <div className="control has-icons-left">
+              <div className='control has-icons-left'>
                 <input
-                  placeholder="Password"
-                  name="password"
-                  type="password"
-                  className="input"
-                  id="password"
+                  placeholder='Password'
+                  name='password'
+                  type='password'
+                  className='input'
+                  id='password'
                   value={user.password}
                   onChange={handleChange}
                 ></input>
-                <span className="icon is-small is-left">
-                  <i className="fas fa-lock"></i>
+                <span className='icon is-small is-left'>
+                  <i className='fas fa-lock'></i>
                 </span>
               </div>
             </div>
-            <button type="submit" className="button is-fullwidth is-info">
+            <button type='submit' className='button is-fullwidth is-info'>
               Login
             </button>
           </form>

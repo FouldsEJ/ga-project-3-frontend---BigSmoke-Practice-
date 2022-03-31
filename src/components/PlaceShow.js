@@ -31,6 +31,7 @@ function PlaceShow() {
   const [singlePlace, setSinglePlace] = React.useState(null);
   const [tabIsActive, setTabIsActive] = React.useState(true);
   const [heartActive, setHeartActive] = React.useState(false);
+  const [itineraryBut, setItineraryBut] = React.useState(true);
   const [category, setCategory] = React.useState(null);
   const [review, setReview] = React.useState(initialReview);
   const [allUsers, setAllUsers] = React.useState(null);
@@ -104,14 +105,13 @@ function PlaceShow() {
   }
 
   async function handleAddOrRemoveItinerary() {
-    if (getLoggedInUserId()) {
-      if (singlePlace.itenerary.includes(getLoggedInUserId())) {
-        const data = await removeFromItenerary(id);
-        setSinglePlace(data);
-      } else {
-        const data = await addToItenerary(id);
-        setSinglePlace(data);
-      }
+    setItineraryBut(!itineraryBut);
+    if (singlePlace.itenerary.includes(getLoggedInUserId())) {
+      const data = await removeFromItenerary(id);
+      setSinglePlace(data);
+    } else {
+      const data = await addToItenerary(id);
+      setSinglePlace(data);
     }
   }
 
@@ -193,73 +193,83 @@ function PlaceShow() {
           <div className='column is-6'>
             <h2 className='title has-text-centered mt-6'>About</h2>
             <p className='content is-medium mb-6'>{singlePlace.description}</p>
-            <div className='columns has-text-centered'>
-              <div className='column'>
-                <p className='subtitle'>
-                  <span className='icon'>
-                    <i className='fa-solid fa-clock'></i>
-                  </span>
-                  <span>
-                    <strong>Opening Times:</strong> <br />
-                    {singlePlace.openingTimes}
-                  </span>
-                </p>
+            <div className='box'>
+              <div className='columns has-text-centered'>
+                <div className='column is-6'>
+                  <p className='subtitle'>
+                    <span className='icon'>
+                      <i className='fa-solid fa-clock'></i>
+                    </span>
+                    <span>
+                      <strong>Opening Times:</strong> <br />
+                      {singlePlace.openingTimes}
+                    </span>
+                  </p>
+                  <p className='subtitle'>
+                    <span className='icon'>
+                      <i className='fa-solid fa-circle-info'></i>
+                    </span>
+                    <span>
+                      <strong>Website</strong>
+                      <br />
+                      <a href={singlePlace.contact}>Click Here</a>
+                    </span>
+                  </p>
+                </div>
+                <div className='column is-6'>
+                  <p className='subtitle'>
+                    <span className='icon'>
+                      <i className='fa-solid fa-train-subway'></i>
+                    </span>
+                    <span>
+                      <strong>Tube Station(s):</strong>
+                      <br />
+                      {singlePlace.stationName.map((station) => (
+                        <>
+                          <span key={uuidv4()}>{station} </span> <br />
+                        </>
+                      ))}
+                    </span>
+                  </p>
 
-                <p className='subtitle'>
-                  <span className='icon'>
-                    <i className='fa-solid fa-circle-info'></i>
-                  </span>
-                  <span>
-                    <strong>Website</strong>
-                    <br />
-                    <a href={singlePlace.contact}>Click Here</a>
-                  </span>
-                </p>
-              </div>
-
-              <div className='column'>
-                <p className='subtitle'>
-                  <span className='icon'>
-                    <i className='fa-solid fa-train-subway'></i>
-                  </span>
-                  <span>
-                    <strong>Tube Station(s):</strong>
-                    <br />
-                    {singlePlace.stationName.map((station) => (
-                      <>
-                        <span key={uuidv4()}>{station} </span> <br />
-                      </>
-                    ))}
-                  </span>
-                </p>
-
-                <p className='subtitle'>
-                  <span className='icon'>
-                    <i className='fa-solid fa-file-lines'></i>
-                  </span>
-                  <span>
-                    <strong>Category:</strong>
-                    <br />
-                    {singlePlace.category.map((category) => (
-                      <>
-                        <span key={uuidv4()}>{category} </span> <br />
-                      </>
-                    ))}
-                  </span>
-                </p>
+                  <p className='subtitle'>
+                    <span className='icon'>
+                      <i className='fa-solid fa-file-lines'></i>
+                    </span>
+                    <span>
+                      <strong>Category:</strong>
+                      <br />
+                      {singlePlace.category.map((category) => (
+                        <>
+                          <span key={uuidv4()}>{category} </span> <br />
+                        </>
+                      ))}
+                    </span>
+                  </p>
+                </div>
               </div>
             </div>
-            <div className='container has-text-centered'>
-              <button
-                className='button has-text-centered is-info is-rounded'
-                onClick={handleAddOrRemoveItinerary}
-              >
-                <span className='icon'>
-                  <i className='fa-solid fa-clipboard-list'></i>
-                </span>
-                <span>Add to Itinary {singlePlace.itenerary.length}</span>
-              </button>
-            </div>
+
+            {getLoggedInUserId() && (
+              <div className='container has-text-centered mt-6'>
+                <button
+                  className='button has-text-centered is-info is-medium'
+                  // className={
+                  //   itineraryBut ? 'button is-outlined' : 'button is-info'
+                  // }
+                  onClick={handleAddOrRemoveItinerary}
+                >
+                  <span className='icon'>
+                    <i className='fa-solid fa-clipboard-list'></i>
+                  </span>
+                  <span>
+                    {itineraryBut
+                      ? 'Add to Itinerary'
+                      : 'Remove from Itinerary'}
+                  </span>
+                </button>
+              </div>
+            )}
           </div>
         </div>
         <hr />
