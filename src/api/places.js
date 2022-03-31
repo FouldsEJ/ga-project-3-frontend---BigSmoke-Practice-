@@ -55,9 +55,10 @@ export const getPlaceByCategory = async (category) => {
 };
 
 export const getPlaceBySearch = async (text, category, station) => {
+  console.log('API DATA: ', text, category, station);
   const options = {
     method: 'GET',
-    url: `/places/search?text=${text}&category=${category}&station=${station}`,
+    url: `api/places/search?text=${text}&category=${category}&station=${station}`
   };
   const { data } = await axios.request(options);
 
