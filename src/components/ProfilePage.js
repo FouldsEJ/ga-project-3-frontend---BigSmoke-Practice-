@@ -33,45 +33,47 @@ function ProfilePage() {
 
   return (
     <>
-      <div className='container has-text-centered'>
-        <div className='column is-half is-offset-one-quarter profile-text'>
-          Welcome back {!userName ? 'Random man' : userName}!
-        </div>
-        {!profilePicture ? (
-          <div>
-            <p>No Photo</p>
+      <section className="profile-section">
+        <div className="container has-text-centered ">
+          <div className="column is-half is-offset-one-quarter profile-text">
+            Welcome back {!userName ? 'Random man' : userName}!
           </div>
-        ) : (
-          <img src={profilePicture} className='image-card profilePicture' />
-        )}
-      </div>
-
-      <div className='itinerary-box column is-half is-offset-one-quarter box'>
-        <h2>Your Travel Intinerary</h2>
-        <div>
-          {!likedPlace ? (
-            <p>Loading itinerary..</p>
-          ) : (
-            <div className='container'>
-              <div className='columns is-multiline'>
-                {likedPlace.map((place) => (
-                  <div
-                    className='column is-one-quarter-desktop is-half-tablet is-one-mobile'
-                    key={place._id}
-                  >
-                    <button
-                      className='delete'
-                      onClick={() => deletePlace(place._id)}
-                    ></button>
-
-                    <PlaceCard {...place} />
-                  </div>
-                ))}
-              </div>
+          {!profilePicture ? (
+            <div>
+              <p>No Photo</p>
             </div>
+          ) : (
+            <img src={profilePicture} className="image-card profilePicture" />
           )}
         </div>
-      </div>
+
+        <div className="itinerary-box column is-half is-offset-one-quarter box">
+          <h2>Your Travel Intinerary</h2>
+          <div>
+            {!likedPlace ? (
+              <p>Loading itinerary..</p>
+            ) : (
+              <div className="container">
+                <div className="columns is-multiline">
+                  {likedPlace.map((place) => (
+                    <div
+                      className="column is-one-quarter-desktop is-half-tablet is-one-mobile"
+                      key={place._id}
+                    >
+                      <button
+                        className="delete"
+                        onClick={() => deletePlace(place._id)}
+                      ></button>
+
+                      <PlaceCard {...place} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
     </>
   );
 }

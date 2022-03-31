@@ -57,79 +57,81 @@ const SearchPage = () => {
 
   return (
     <>
-      <div className="section has-text-centered p-0 filter-search">
-        <h1 className="title">Explore London</h1>
-        <div className="container">
-          <div className="columns mb-3 is-centered">
-            <div className="column is-2">
-              <div className="field">
-                <label className="label">Search Keyword</label>
-                <p className="control has-icons-left">
-                  <input
-                    type="text"
-                    onChange={nameSearch}
-                    placeholder="Search"
-                    className="input is-info is-rounded"
-                  />
-                  <span className="icon is-left">
-                    <i className="fas fa-search"></i>
-                  </span>
-                </p>
+      <section className="search-section">
+        <div className="section has-text-centered p-0 ">
+          <h1 className="title">Explore London</h1>
+          <div className="container">
+            <div className="columns mb-3 is-centered">
+              <div className="column is-2">
+                <div className="field">
+                  <label className="label">Search Keyword</label>
+                  <p className="control has-icons-left">
+                    <input
+                      type="text"
+                      onChange={nameSearch}
+                      placeholder="Search"
+                      className="input is-info is-rounded"
+                    />
+                    <span className="icon is-left">
+                      <i className="fas fa-search"></i>
+                    </span>
+                  </p>
+                </div>
               </div>
-            </div>
 
-            <div className="column is-2">
-              <div className="field">
-                <label className="label">Category</label>
-                <span className="select">
-                  <select
-                    name="categories"
-                    onChange={getCategories}
-                    className="input is-info is-rounded"
-                  >
-                    <option value="all">All</option>
-                    <option value="arts/culture">Arts/Culture</option>
-                    <option value="shopping">Shopping</option>
-                    <option value="outdoors">Outdoors</option>
-                    <option value="entertainment">Entertainment</option>
-                    <option value="food/drink">Food/Drink</option>
-                  </select>
-                </span>
+              <div className="column is-2">
+                <div className="field">
+                  <label className="label">Category</label>
+                  <span className="select">
+                    <select
+                      name="categories"
+                      onChange={getCategories}
+                      className="input is-info is-rounded"
+                    >
+                      <option value="all">All</option>
+                      <option value="arts/culture">Arts/Culture</option>
+                      <option value="shopping">Shopping</option>
+                      <option value="outdoors">Outdoors</option>
+                      <option value="entertainment">Entertainment</option>
+                      <option value="food/drink">Food/Drink</option>
+                    </select>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <hr id="search-page-line" />
+        <hr id="search-page-line" />
 
-      <div className="section search-display-wrapper">
-        {!filteredPlace ? (
-          <p>Loading ..</p>
-        ) : (
-          <>
-            <div className="columns">
-              <div className="column ">
-                <div className="columns is-multiline scroll">
-                  {filteredPlace.map((place) => (
-                    <div
-                      className="column is-one-third-desktop is-half-tablet is-one-mobile mt-6 placecard"
-                      key={place._id}
-                    >
-                      <PlaceCard {...place} />
-                    </div>
-                  ))}
+        <div className="section search-display-wrapper">
+          {!filteredPlace ? (
+            <p>Loading ..</p>
+          ) : (
+            <>
+              <div className="columns">
+                <div className="column ">
+                  <div className="columns is-multiline scroll">
+                    {filteredPlace.map((place) => (
+                      <div
+                        className="column is-one-third-desktop is-half-tablet is-one-mobile mt-6 placecard"
+                        key={place._id}
+                      >
+                        <PlaceCard {...place} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="column is-6">
+                  <div className="map-search">
+                    <MapSearch filteredPlace={filteredPlace} />
+                  </div>
                 </div>
               </div>
-              <div className="column is-6">
-                <div className="map-search">
-                  <MapSearch filteredPlace={filteredPlace} />
-                </div>
-              </div>
-            </div>
-          </>
-        )}
-      </div>
+            </>
+          )}
+        </div>
+      </section>
     </>
   );
 };

@@ -47,10 +47,11 @@ function PlaceShow() {
 
       const allUsersData = await getAllUsers();
       setAllUsers(allUsersData);
+      setTabIsActive(true);
     };
 
     getData();
-  }, []);
+  }, [id]);
 
   function handleTabClick(e) {
     setTabIsActive(!tabIsActive);
