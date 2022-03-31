@@ -31,7 +31,7 @@ function Navbar() {
   };
   return (
     <header>
-      <div className="navbar has-shadow is-white ">
+      <div className="navbar">
         <div className="navbar-brand"></div>
         <div className="navbar-start is-mobile ">
           <Link to="/" className="navbar-item is-white">

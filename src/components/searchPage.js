@@ -1,53 +1,56 @@
 import React from 'react';
-import { getAllPlaces } from '../api/places.js';
-import { getPlaceByCategory } from '../api/places.js';
+import {
+  getAllPlaces,
+  getAllStations,
+  getPlaceBySearch,
+} from '../api/places.js';
 import PlaceCard from './PlaceCard.js';
 import MapSearch from './MapSearch.js';
 const SearchPage = () => {
   const [allPlaces, setAllPlaces] = React.useState(null);
-  const [filteredPlace, setFilteredPlace] = React.useState(null);
-  const [categories, setCategories] = React.useState(null);
+  const [allStations, setAllStations] = React.useState(null);
+  const [searchCriteria, setSearchCriteria] = React.useState({
+    name: '',
+    category: '',
+    stationName: '',
+  });
+
   React.useEffect(() => {
     const getData = async () => {
       try {
-        const placeData = await getAllPlaces();
+        console.log(searchCriteria.category);
+        const placeData = await getPlaceBySearch(
+          searchCriteria.name,
+          searchCriteria.category,
+          searchCriteria.stationName
+        );
+        console.log('PLACE DATA: ', placeData);
         setAllPlaces(placeData);
+        const stationData = await getAllStations();
+        setAllStations(stationData);
       } catch (err) {
         console.log('get all places error: ', err);
       }
     };
     getData();
-  }, []);
-  function getCategories(event) {
-    if (event.target.value === 'all') {
-      setCategories(allPlaces);
-      setFilteredPlace(allPlaces);
-    } else {
-      const getData = async () => {
-        try {
-          const placeData = await getPlaceByCategory(event.target.value);
-          setCategories(placeData);
-          setFilteredPlace(placeData);
-        } catch (err) {
-          console.log('get categories error: ', err);
-        }
-      };
-      getData();
-    }
+  }, [searchCriteria]);
+
+  function handleSearch(event) {
+    setSearchCriteria({
+      ...searchCriteria,
+      [event.target.name]: event.target.value,
+    });
   }
-  function nameSearch(event) {
-    let newData = [];
-    if (filteredPlace) {
-      newData = categories.filter((data) => {
-        return (
-          data.name.toLowerCase().search(event.target.value.toLowerCase()) !==
-          -1
-        );
-      });
-      setFilteredPlace(newData);
-      console.log(filteredPlace);
-    }
-  }
+  // const getData = async () => {
+  //   try {
+  //     const placeData = await getPlaceBySearch('', 'Arts/Culture', 'Waterloo');
+  //     setAllPlaces(placeData);
+  //     console.log('inside function: ', searchCriteria);
+  //   } catch (err) {
+  //     console.log('get categories error: ', err);
+  //   }
+  // };
+  //console.log('OUTSIDE FUCTION', searchCriteria);
   return (
     <>
       <section className="search-section">
@@ -55,13 +58,14 @@ const SearchPage = () => {
           <h1 className="title">Explore London</h1>
           <div className="container">
             <div className="columns mb-3 is-centered">
-              <div className="column is-2">
+              <div className="column is-3">
                 <div className="field">
                   <label className="label">Search Keyword</label>
                   <p className="control has-icons-left">
                     <input
+                      name="name"
                       type="text"
-                      onChange={nameSearch}
+                      onChange={handleSearch}
                       placeholder="Search"
                       className="input is-info is-rounded"
                     />
@@ -71,22 +75,46 @@ const SearchPage = () => {
                   </p>
                 </div>
               </div>
-              <div className="column is-2">
+              <div className="column is-3">
                 <div className="field">
                   <label className="label">Category</label>
                   <span className="select">
                     <select
-                      name="categories"
-                      onChange={getCategories}
+                      name="category"
+                      onChange={handleSearch}
                       className="input is-info is-rounded"
                     >
-                      <option value="all">All</option>
-                      <option value="arts/culture">Arts/Culture</option>
-                      <option value="shopping">Shopping</option>
-                      <option value="outdoors">Outdoors</option>
-                      <option value="entertainment">Entertainment</option>
-                      <option value="food/drink">Food/Drink</option>
+                      <option value="">All</option>
+                      <option value="Arts/Culture">Arts/Culture</option>
+                      <option value="Shopping">Shopping</option>
+                      <option value="Outdoors">Outdoors</option>
+                      <option value="Entertainment">Entertainment</option>
+                      <option value="Food/drink">Food/Drink</option>
                     </select>
+                  </span>
+                </div>
+              </div>
+
+              <div className="column is-3">
+                <div className="field">
+                  <label className="label">nearby stations</label>
+                  <span className="select">
+                    {!allStations ? (
+                      <p>Loading stations...</p>
+                    ) : (
+                      <select
+                        name="stationName"
+                        className="input is-info is-rounded"
+                        onChange={handleSearch}
+                      >
+                        <option value="">All</option>
+                        {allStations.map((station) => (
+                          <option key={station._id} value={station.name}>
+                            {station.name}
+                          </option>
+                        ))}
+                      </select>
+                    )}
                   </span>
                 </div>
               </div>
@@ -95,14 +123,14 @@ const SearchPage = () => {
         </div>
         <hr id="search-page-line" />
         <div className="section search-display-wrapper">
-          {!filteredPlace ? (
+          {!allPlaces ? (
             <p>Loading ..</p>
           ) : (
             <>
               <div className="columns">
                 <div className="column ">
                   <div className="columns is-multiline scroll">
-                    {filteredPlace.map((place) => (
+                    {allPlaces.map((place) => (
                       <div
                         className="column is-one-third-desktop is-half-tablet is-one-mobile mt-6 placecard"
                         key={place._id}
@@ -114,7 +142,7 @@ const SearchPage = () => {
                 </div>
                 <div className="column is-6">
                   <div className="map-search">
-                    <MapSearch filteredPlace={filteredPlace} />
+                    <MapSearch filteredPlace={allPlaces} />
                   </div>
                 </div>
               </div>
