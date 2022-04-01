@@ -8,7 +8,7 @@ const SearchPage = () => {
   const [searchCriteria, setSearchCriteria] = React.useState({
     name: '',
     category: '',
-    stationName: ''
+    stationName: '',
   });
 
   React.useEffect(() => {
@@ -34,7 +34,7 @@ const SearchPage = () => {
   function handleSearch(event) {
     setSearchCriteria({
       ...searchCriteria,
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   }
 
