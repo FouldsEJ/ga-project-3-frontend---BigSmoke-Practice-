@@ -89,14 +89,14 @@ function AddPlace() {
   }
 
   return (
-    <div className='container has-text-centered'>
+    <div className='container has-text-centered place-box'>
       <h1 className='title'>Add Place</h1>
       <form
-        className='column is-half is-offset-one-quarter box'
+        className='column is-half is-offset-one-quarter box addplacebox'
         onSubmit={handleSubmit}
       >
         <div className='field name'>
-          <label className='label'>Name</label>
+          <label className='label addPlacelabel'>Name</label>
           <div className='control'>
             <input
               className='input'
@@ -108,7 +108,7 @@ function AddPlace() {
           </div>
         </div>
         <div className='field description'>
-          <label className='label'>Description</label>
+          <label className='label addPlacelabel'>Description</label>
           <div className='control'>
             <textarea
               className='input'
@@ -121,7 +121,7 @@ function AddPlace() {
         </div>
 
         <div name='categories field'>
-          <label className='label'>Categories</label>
+          <label className='label addPlacelabel'>Categories</label>
           <div className='is-flex category'>
             {categories.map((category) => {
               return (
@@ -140,7 +140,7 @@ function AddPlace() {
         </div>
 
         <div className='field image'>
-          <label className='label'>Image Url</label>
+          <label className='label addPlacelabel'>Image Url</label>
           <div className='control'>
             <input
               className='input'
@@ -152,7 +152,7 @@ function AddPlace() {
           </div>
         </div>
         <div className='field coordinates'>
-          <label className='label'>Coordinates</label>
+          <label className='label addPlacelabel'>Coordinates</label>
           <div className='is-flex coordinates-box'>
             <div className='control'>
               <label>Lat</label>
@@ -180,7 +180,7 @@ function AddPlace() {
         </div>
 
         <div className='field openingTimes'>
-          <label className='label'>Opening Times</label>
+          <label className='label addPlacelabel'>Opening Times</label>
           <div className='control'>
             <input
               className='input'
@@ -193,7 +193,7 @@ function AddPlace() {
         </div>
 
         <div className='field contact'>
-          <label className='label'>Contact</label>
+          <label className='label addPlacelabel'>Contact</label>
           <div className='control'>
             <input
               className='input'
@@ -205,7 +205,7 @@ function AddPlace() {
           </div>
         </div>
         <div name='stationName field'>
-          <label className='label'>Station Name</label>
+          <label className='label addPlacelabel'>Station Name</label>
 
           {!stations ? (
             <p>Boarding trains...</p>
@@ -218,7 +218,9 @@ function AddPlace() {
             />
           )}
         </div>
-        <input type='submit' className='button' />
+        <div className='place-submit'>
+          <input type='submit' className='button' />
+        </div>
       </form>
       <p>{createdPage}</p>
     </div>
