@@ -126,6 +126,25 @@ img {
 
 // Place Show Page
 
+.about-section {
+  padding-bottom: 0;
+}
+
+.about-details {
+  background-color: #ececec;
+  border-radius: 20px;
+}
+
+.review-section {
+  padding-top: 20px;
+}
+
+.review-container {
+  padding: 20px;
+  background-color: #ececec;
+  border-radius: 20px;
+}
+
 .image-and-map-column {
   height: 70vh;
   box-sizing: border-box;
@@ -137,7 +156,6 @@ img {
     width: 100%;
     height: 100%;
     border-radius: 20px;
-    margin-bottom: 100px;
 
     figure img {
       border-radius: 20px;
@@ -148,14 +166,19 @@ img {
 
   #map-view {
     width: 100%;
-    height: 100%;
+    height: 80%;
     border-radius: 20px;
     overflow: hidden;
   }
 }
 
-hr {
-  margin-top: 60px;
+.about-hr {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+.review-hr {
+  margin-top: 0;
 }
 
 .heart {
@@ -179,6 +202,10 @@ hr {
 
 // Explore Page
 
+.search-section {
+  margin: 10px 0;
+}
+
 .map-search {
   width: 100%;
   height: 550px;
@@ -197,20 +224,11 @@ hr {
   padding: 0 0 0 20px;
 }
 
-.card-header h2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  text-overflow: ellipsis;
-  // white-space: nowrap;
-  overflow: hidden;
-}
 .scroll {
   overflow-y: auto;
   max-height: 550px;
   margin-top: 0px;
 }
-// place card
 
 // Place Cards
 
@@ -243,8 +261,8 @@ hr {
 }
 
 //Footer
-.login-section  {
-    min-height: calc(100vh - 196px);
+.login-section {
+  min-height: calc(100vh - 196px);
 }
 
 .register-section {
@@ -258,8 +276,9 @@ hr {
 }
 
 .footer {
-  height: 100px;
-  background-color:#142d4c;
+  height: 80px;
+  background-color: #142d4c;
+  padding-top: 10px;
 }
 
 .footer .content {
