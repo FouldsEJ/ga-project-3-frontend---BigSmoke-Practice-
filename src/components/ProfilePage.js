@@ -4,7 +4,6 @@ import PlaceCard from './PlaceCard.js';
 import { getLoggedInUserId, getLoggedInUserName } from '../lib/auth.js';
 //import { getImage, postImage } from '../api/auth.js';
 import { getUser } from '../api/auth.js';
-import { removeLike } from '../api/places.js';
 
 function ProfilePage() {
   const userName = getLoggedInUserName();
@@ -14,8 +13,8 @@ function ProfilePage() {
 
   React.useEffect(() => {
     const getData = async () => {
-      const likedPlaces = await getItinerary(userId);
-      setMyPlace(likedPlaces);
+      const myPlaces = await getItinerary(userId);
+      setMyPlace(myPlaces);
       const user = await getUser(userId);
       setProfilePicture(user.image);
     };
@@ -24,18 +23,18 @@ function ProfilePage() {
 
   function deletePlace(place) {
     const getData = async () => {
-      await removeLike(place);
-      const likedPlaces = await getItinerary(userId);
-      setMyPlace(likedPlaces);
+      await removeFromItenerary(place);
+      const myPlaces = await getItinerary(userId);
+      setMyPlace(myPlaces);
     };
     getData();
   }
 
   return (
     <>
-      <section className="profile-section">
-        <div className="container has-text-centered ">
-          <div className="column is-half is-offset-one-quarter profile-text">
+      <section className='profile-section'>
+        <div className='container has-text-centered '>
+          <div className='column is-half is-offset-one-quarter profile-text'>
             Welcome back {!userName ? 'Random man' : userName}!
           </div>
           {!profilePicture ? (
@@ -43,25 +42,25 @@ function ProfilePage() {
               <p>No Photo</p>
             </div>
           ) : (
-            <img src={profilePicture} className="image-card profilePicture" />
+            <img src={profilePicture} className='image-card profilePicture' />
           )}
         </div>
 
-        <div className="itinerary-box column is-half is-offset-one-quarter box">
+        <div className='itinerary-box column is-half is-offset-one-quarter box'>
           <h2>Your Travel Intinerary</h2>
           <div>
-            {!likedPlace ? (
+            {!myPlace ? (
               <p>Loading itinerary..</p>
             ) : (
-              <div className="container">
-                <div className="columns is-multiline">
-                  {likedPlace.map((place) => (
+              <div className='container'>
+                <div className='columns is-multiline'>
+                  {myPlace.map((place) => (
                     <div
-                      className="column is-one-quarter-desktop is-half-tablet is-one-mobile"
+                      className='column is-one-quarter-desktop is-half-tablet is-one-mobile'
                       key={place._id}
                     >
                       <button
-                        className="delete"
+                        className='delete'
                         onClick={() => deletePlace(place._id)}
                       ></button>
 

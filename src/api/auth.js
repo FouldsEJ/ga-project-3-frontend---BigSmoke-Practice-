@@ -29,12 +29,17 @@ export const loginUser = async (credentials) => {
 };
 
 export const getAllUsers = async () => {
-  const options = {
-    method: 'GET',
-    url: `/api/users`
-  };
-  const { data } = await axios.request(options);
-  return data;
+  try {
+    const options = {
+      method: 'GET',
+      url: `/api/users`
+    };
+    console.log('DOING REQUEST');
+    const { data } = await axios.request(options);
+    return data;
+  } catch (err) {
+    console.log('WHY USERS ISNT WORKING: ', err);
+  }
 };
 
 export const getUser = async (id) => {
