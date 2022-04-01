@@ -34,9 +34,29 @@ function ProfilePage() {
     return <p>Loading places ... </p>;
   } else {
     return (
-      <>
-        <section>
-          <div className='profile-background'>
+      <section className='profile-section'>
+        <section className='hero profile-page'>
+          <div className='hero-body is-flex is-align-items-center'>
+            <div className='container'>
+              <h1 className='title has-text-centered'>
+                Welcome back {!userName ? 'Random man' : userName}!
+              </h1>
+              {!profilePicture ? (
+                <div className='container has-text-centered'>
+                  <p>No Photo</p>
+                </div>
+              ) : (
+                <div className='container is-centered'>
+                  <figure className='image is-128x128 image-container-profile'>
+                    <img src={profilePicture} className='profilePicture' />
+                  </figure>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+        {/* <section className='hero'>
+          <div className='hero-body profile-background'>
             <div className='has-text-centered profile-section'>
               <div className='column profile-text'>
                 Welcome back {!userName ? 'Random man' : userName}!
@@ -52,41 +72,43 @@ function ProfilePage() {
                 />
               )}
             </div>
-            <div className='itinerary-box'>
-              <h2 className='subtitle has-text-centered profile-bit'>
-                Your Travel Intinerary
-              </h2>
-              <div>
-                <div className='container'>
-                  <div className='columns is-multiline travel-itin'>
-                    {myPlace.map((place) => (
-                      <div
-                        className='column is-one-quarter-desktop is-half-tablet is-one-mobile'
-                        key={place._id}
-                      >
-                        <button
-                          className='delete'
-                          onClick={() => deletePlace(place._id)}
-                        ></button>
+          </div>
+        </section> */}
+        <section>
+          <div className='itinerary-box'>
+            <h2 className='subtitle has-text-centered profile-bit'>
+              Your Travel Intinerary
+            </h2>
+            <div>
+              <div className='container'>
+                <div className='columns is-multiline travel-itin'>
+                  {myPlace.map((place) => (
+                    <div
+                      className='column is-one-quarter-desktop is-half-tablet is-one-mobile'
+                      key={place._id}
+                    >
+                      <button
+                        className='delete'
+                        onClick={() => deletePlace(place._id)}
+                      ></button>
 
-                        <PlaceCard {...place} />
-                      </div>
-                    ))}
-                    {!myPlace.length && (
-                      <div className='container'>
-                        <p className='column has-text-centered'>
-                          Head to the explore page to add a place to your
-                          itinerary
-                        </p>
-                      </div>
-                    )}
-                  </div>
+                      <PlaceCard {...place} />
+                    </div>
+                  ))}
+                  {!myPlace.length && (
+                    <div className='container'>
+                      <p className='column has-text-centered'>
+                        Head to the explore page to add a place to your
+                        itinerary
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
           </div>
         </section>
-      </>
+      </section>
     );
   }
 }

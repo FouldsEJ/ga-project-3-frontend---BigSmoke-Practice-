@@ -50,6 +50,7 @@ function PlaceShow() {
 
       console.log(id);
 
+      setItineraryBut(place.itenerary.includes(getLoggedInUserId()));
       setHeartActive(localStorage.getItem(id) === id);
 
       const allUsersData = await getAllUsers();
@@ -268,8 +269,8 @@ function PlaceShow() {
                   </span>
                   <span>
                     {itineraryBut
-                      ? 'Add to Itinerary'
-                      : 'Remove from Itinerary'}
+                      ? 'Remove from Itinerary'
+                      : 'Add to Itinerary'}
                   </span>
                 </button>
               </div>

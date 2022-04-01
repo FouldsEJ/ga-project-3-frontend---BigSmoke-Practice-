@@ -102,13 +102,15 @@ img {
 }
 
 // profile page
-.profile-section {
+.profile-page {
   background-image: url('https://wallpaperaccess.com/full/204300.jpg');
-  width: 100% !important;
-  max-height: 300px !important;
   background-position: top;
   background-size: cover;
-  flex-direction: column;
+  height: 40vh;
+}
+
+.image-container-profile {
+  margin: 0 auto;
 }
 
 .profile-text {
