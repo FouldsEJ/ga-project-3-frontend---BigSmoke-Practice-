@@ -102,15 +102,18 @@ img {
 }
 
 // profile page
-.profile-background {
-  background-image: url('https://media.istockphoto.com/photos/london-tower-bridge-river-thames-city-skyscrapers-illuminated-sunset-picture-id860119662?k=20&m=860119662&s=170667a&w=0&h=ItV1oh0qQypQ4QBIC1c2Dth3SjyS0DR3rdRoCo8NJFY=');
-  height: 400px;
-  background-position: center;
+.profile-section {
+  background-image: url('https://wallpaperaccess.com/full/204300.jpg');
+  width: 100% !important;
+  max-height: 300px !important;
+  background-position: top;
   background-size: cover;
   flex-direction: column;
 }
+
 .profile-text {
   font-size: 50px;
+  min-height: 100% !important;
 }
 .profilePicture {
   width: 150px;
@@ -122,6 +125,9 @@ img {
 }
 .itinerary-box {
   min-height: 200px;
+  margin: auto !important;
+  width: 90% !important;
+  padding-bottom: 50px;
 }
 
 // Place Show Page
@@ -217,6 +223,9 @@ hr {
 .card {
   position: relative;
 }
+.image-card-overlay {
+  font-family: 'Comfortaa', cursive;
+}
 
 .image-card-overlay {
   position: absolute;
@@ -281,4 +290,16 @@ hr {
   img {
     min-width: 100%;
   }
+}
+//add place page
+.addplacebox {
+  background-color: #1e293b;
+  color: white;
+}
+.addPlacelabel {
+  color: white;
+}
+.place-box,
+.place-submit {
+  padding-top: 30px !important;
 }

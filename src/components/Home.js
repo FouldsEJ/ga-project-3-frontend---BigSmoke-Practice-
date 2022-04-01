@@ -47,30 +47,30 @@ function Home() {
           </p>
           <p>
             {' '}
-            <Link to="/explore">Click here to explore London!</Link>
+            <Link to='/explore'>Click here to explore London!</Link>
           </p>
         </Popup>
 
-        <section className="hero is-medium is-light" id="hero-image">
-          <div className="hero-body is-flex ">
-            <div className="container hero-container overlay">
-              <h1 className="title display hero-title">
+        <section className='hero is-medium is-light' id='hero-image'>
+          <div className='hero-body is-flex '>
+            <div className='container hero-container overlay'>
+              <h1 className='title display hero-title'>
                 <FontAwesomeIcon icon={faCity} />
                 <span> The Big Smoke</span>
               </h1>
-              <h2 className="block">Discover London from Londoners </h2>
-              <button className="button btn is-rounded" onClick={handleSubmit}>
+              <h2 className='block'>Discover London from Londoners </h2>
+              <button className='button btn is-rounded' onClick={handleSubmit}>
                 Explore
               </button>
             </div>
           </div>
         </section>
 
-        <section className="hero is-medium is-light" id="hero-text">
-          <div className="container is-max-widescreen">
-            <h3 className="title"> Welcome to London!</h3>
+        <section className='hero is-medium is-light' id='hero-text'>
+          <div className='container is-max-widescreen'>
+            <h3 className='title'> Welcome to London!</h3>
 
-            <h2 className="block">
+            <h2 className='block subtitle'>
               Discover the best of London with Visit London, the independent
               guide to England’s exciting capital. Find things to do in London,
               from iconic sightseeing spots and fun-filled days out to top
@@ -81,9 +81,9 @@ function Home() {
           </div>
         </section>
 
-        <section className="hero is-light">
-          <div className="hero-body">
-            <p className="title">Most popular</p>
+        <section className='hero is-light'>
+          <div className='hero-body'>
+            <p className='title'>Most popular</p>
             <Splide
               options={{
                 perPage: 3,
@@ -94,15 +94,15 @@ function Home() {
                 gap: '20px',
                 breakpoints: {
                   1024: {
-                    perPage: 3,
+                    perPage: 3
                   },
                   768: {
-                    perPage: 2,
+                    perPage: 2
                   },
                   500: {
-                    perPage: 1,
-                  },
-                },
+                    perPage: 1
+                  }
+                }
               }}
             >
               {popular ? (

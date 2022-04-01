@@ -30,51 +30,65 @@ function ProfilePage() {
     getData();
   }
 
-  return (
-    <>
-      <section className='profile-section'>
-        <div className='container has-text-centered '>
-          <div className='column is-half is-offset-one-quarter profile-text'>
-            Welcome back {!userName ? 'Random man' : userName}!
-          </div>
-          {!profilePicture ? (
-            <div>
-              <p>No Photo</p>
+  if (!myPlace) {
+    return <p>Loading places ... </p>;
+  } else {
+    return (
+      <>
+        <section>
+          <div className='profile-background'>
+            <div className='has-text-centered profile-section'>
+              <div className='column profile-text'>
+                Welcome back {!userName ? 'Random man' : userName}!
+              </div>
+              {!profilePicture ? (
+                <div>
+                  <p>No Photo</p>
+                </div>
+              ) : (
+                <img
+                  src={profilePicture}
+                  className='image-card profilePicture'
+                />
+              )}
             </div>
-          ) : (
-            <img src={profilePicture} className='image-card profilePicture' />
-          )}
-        </div>
+            <div className='itinerary-box'>
+              <h2 className='subtitle has-text-centered profile-bit'>
+                Your Travel Intinerary
+              </h2>
+              <div>
+                <div className='container'>
+                  <div className='columns is-multiline travel-itin'>
+                    {myPlace.map((place) => (
+                      <div
+                        className='column is-one-quarter-desktop is-half-tablet is-one-mobile'
+                        key={place._id}
+                      >
+                        <button
+                          className='delete'
+                          onClick={() => deletePlace(place._id)}
+                        ></button>
 
-        <div className='itinerary-box column is-half is-offset-one-quarter box'>
-          <h2>Your Travel Intinerary</h2>
-          <div>
-            {!myPlace ? (
-              <p>Loading itinerary..</p>
-            ) : (
-              <div className='container'>
-                <div className='columns is-multiline'>
-                  {myPlace.map((place) => (
-                    <div
-                      className='column is-one-quarter-desktop is-half-tablet is-one-mobile'
-                      key={place._id}
-                    >
-                      <button
-                        className='delete'
-                        onClick={() => deletePlace(place._id)}
-                      ></button>
-
-                      <PlaceCard {...place} />
-                    </div>
-                  ))}
+                        <PlaceCard {...place} />
+                      </div>
+                    ))}
+                    {!myPlace.length && (
+                      <div className='container'>
+                        <p className='column has-text-centered'>
+                          Head to the explore page to add a place to your
+                          itinerary
+                        </p>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            )}
+            </div>
           </div>
-        </div>
-      </section>
-    </>
-  );
+        </section>
+      </>
+    );
+  }
 }
 
 export default ProfilePage;

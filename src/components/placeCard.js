@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const PlaceCard = ({ _id, name, image, stationName }) => {
   return (
     <Link to={`/explore/${_id}`}>
-      <div className='card'>
+      <div className='card placecards'>
         {/* <div className='card-header'>
           <h2 className='card-header-title is-centered'>{name}</h2>
         </div> */}
