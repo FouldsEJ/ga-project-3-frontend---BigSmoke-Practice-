@@ -5,13 +5,13 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 
 function Footer() {
   return (
-    <footer className="footer  has-shadow is-white" id="footer-main">
+    <footer className="footer has-shadow is-white" id="footer-main">
       <div className="content has-text-centered">
         <p>
-          <strong>The Big Smoke</strong> repo can be found on{' '}
+          <b> The Big Smoke</b> repo can be found on{' '}
           <a href="https://github.com/FouldsEJ/project-3">
             {' '}
-            <FontAwesomeIcon icon={faGithub} size="2x" />
+            <FontAwesomeIcon icon={faGithub} size="3x" />
           </a>
         </p>
         <p>
